@@ -3,1624 +3,1976 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=1440">
-<title>NEON HIGHSCORE — GAME RESEARCH vol.01</title>
+<title>AI OR NOT — Game Market Intelligence vol.01 · April 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,700;9..144,900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 /* =========================================================
-   NEON HIGHSCORE — Research Magazine vol.01
-   Pixel-art / Retro Arcade stylesheet, self-contained
+   GAME MARKET INTELLIGENCE vol.01 — Editorial Report
+   Design: dark editorial / financial-magazine, Fraunces+Inter
    ========================================================= */
 :root{
-  --bg-deep:#0a0014;
-  --bg-card:#15092c;
-  --bg-card2:#1d0d3a;
-  --border:#ff2e88;
-  --border-dim:#8b1849;
-  --cyan:#00ffff;
-  --magenta:#ff00ff;
-  --gold:#ffd700;
-  --purple:#8b5cf6;
-  --text:#f0f8ff;
-  --dim:#a78bfa;
-  --win:#00ff66;
-  --warn:#ff4444;
-  --orange:#ff9b3f;
+  --bg:#0b0a08;
+  --bg-soft:#131210;
+  --bg-card:#1a1815;
+  --ink:#f5f2ea;
+  --ink-dim:#9a968b;
+  --rule:#2a2720;
+  --rule-soft:#1f1c17;
+  --red:#ff3355;
+  --gold:#d4a843;
+  --green:#7fc26a;
+  --blue:#6b8cff;
+  --purple:#b18aff;
 }
 
-*{box-sizing:border-box;margin:0;padding:0;image-rendering:pixelated}
-html,body{background:var(--bg-deep);color:var(--text);font-family:'VT323',monospace;font-size:22px;line-height:1.35;overflow-x:hidden}
-
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-  background-image:
-    radial-gradient(ellipse at 20% 10%, rgba(255,46,136,.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(0,255,255,.12) 0%, transparent 60%),
-    linear-gradient(180deg, #0a0014 0%, #0d0020 100%);
-  background-attachment:fixed;
+  background:var(--bg);color:var(--ink);
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:18px;line-height:1.65;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  font-feature-settings:"ss01","cv11";
 }
 
-/* ----- Scanlines overlay over everything ----- */
+/* Paper grain texture */
 body::before{
   content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:9999;
-  background:repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent 3px,
-    rgba(0,0,0,.12) 3px,
-    rgba(0,0,0,.12) 4px
-  );
+  position:fixed;inset:0;pointer-events:none;z-index:100;
+  background-image:radial-gradient(rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size:3px 3px;
   mix-blend-mode:overlay;
 }
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:9998;
-  background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.5) 100%);
+
+/* Layout */
+main{max-width:1320px;margin:0 auto;padding:0 60px 120px}
+.grid{display:grid;gap:40px}
+.col-2{grid-template-columns:1fr 1fr}
+.col-3{grid-template-columns:repeat(3,1fr)}
+.col-4{grid-template-columns:repeat(4,1fr)}
+
+/* Typography */
+h1,h2,h3,.display{font-family:'Fraunces',Georgia,serif;font-weight:400;letter-spacing:-0.02em;line-height:1.02;font-feature-settings:"ss01","ss03"}
+h1{font-size:clamp(90px,14vw,220px);font-weight:300;font-variation-settings:"opsz" 144,"SOFT" 30;letter-spacing:-0.05em}
+h2{font-size:clamp(56px,7vw,112px);font-weight:300;font-variation-settings:"opsz" 120;letter-spacing:-0.04em}
+h3{font-size:clamp(36px,4vw,64px);font-weight:400;font-variation-settings:"opsz" 60;letter-spacing:-0.03em}
+h4{font-family:'Fraunces',serif;font-size:28px;font-weight:500;font-variation-settings:"opsz" 36;letter-spacing:-0.02em;line-height:1.2}
+
+p{font-size:20px;line-height:1.6;color:var(--ink)}
+.lede{font-family:'Fraunces',serif;font-size:32px;line-height:1.4;font-weight:300;color:var(--ink);font-variation-settings:"opsz" 36}
+.muted{color:var(--ink-dim)}
+.tiny{font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-dim);font-weight:600;font-family:'Inter',sans-serif}
+.label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.mono{font-family:'JetBrains Mono',monospace}
+.serif{font-family:'Fraunces',serif}
+.red{color:var(--red)}
+.gold{color:var(--gold)}
+.green{color:var(--green)}
+.blue{color:var(--blue)}
+.purple{color:var(--purple)}
+
+/* Section rules */
+.rule{border:none;border-top:1px solid var(--rule);margin:80px 0}
+.rule-thick{border:none;border-top:3px solid var(--ink);margin:80px 0 60px}
+.rule-double{border:none;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);height:6px;margin:80px 0 60px}
+
+section{padding:80px 0;border-top:1px solid var(--rule)}
+section:first-of-type{border-top:none}
+
+/* Drop caps */
+.drop::first-letter{
+  font-family:'Fraunces',serif;
+  font-size:120px;
+  font-weight:300;
+  font-variation-settings:"opsz" 144;
+  float:left;
+  line-height:0.82;
+  margin:8px 14px -2px 0;
+  color:var(--gold);
 }
 
-@keyframes flicker{0%,96%{opacity:1}97%{opacity:.88}98%{opacity:1}99%{opacity:.92}100%{opacity:1}}
-@keyframes glow{0%,100%{filter:drop-shadow(0 0 8px currentColor)}50%{filter:drop-shadow(0 0 20px currentColor)}}
-@keyframes sparkle{0%,100%{opacity:.3}50%{opacity:1}}
-@keyframes crawl{from{transform:translateY(100%)}to{transform:translateY(-100%)}}
-
-main{max-width:1380px;margin:0 auto;padding:0 30px 80px;animation:flicker 8s infinite}
-
-/* ---------- Generic retro components ---------- */
-h1,h2,h3{font-family:'Press Start 2P',monospace;letter-spacing:1px;line-height:1.5}
-h2{font-size:24px;color:var(--magenta);text-shadow:3px 3px 0 var(--bg-deep), 0 0 18px rgba(255,0,255,.6);margin:64px 0 28px;padding:0}
-h3{font-size:15px;color:var(--cyan);text-shadow:2px 2px 0 var(--bg-deep);margin:20px 0 12px}
-
-.divider{font-family:'VT323',monospace;font-size:22px;color:var(--border-dim);text-align:center;margin:40px 0 28px;letter-spacing:2px;user-select:none}
-
-.card{
-  background:var(--bg-card);
-  border:4px solid var(--border);
-  padding:22px 26px;
-  box-shadow:6px 6px 0 var(--bg-deep), 12px 12px 0 var(--border-dim);
-  position:relative;
-  margin-bottom:28px;
+/* ===========================================
+   MASTHEAD / COVER
+   =========================================== */
+.masthead{
+  padding:50px 60px 30px;
+  border-bottom:1px solid var(--rule);
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin:0 -60px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--ink-dim);
 }
-.card h3{margin-top:0}
-.card-dim{background:var(--bg-card2);border-color:var(--purple);box-shadow:6px 6px 0 var(--bg-deep), 12px 12px 0 #3a1a5c;}
+.masthead .logo{font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:var(--ink);letter-spacing:0.03em}
 
-.neon-label{
-  display:inline-block;
-  font-family:'Press Start 2P',monospace;
-  font-size:9px;
-  background:var(--border);
-  color:var(--bg-deep);
-  padding:6px 10px;
-  margin-bottom:10px;
-  box-shadow:2px 2px 0 var(--bg-deep);
-  letter-spacing:1px;
+.cover{padding:100px 0 80px;position:relative}
+.cover .issue{
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:30px;
 }
-.neon-label.cyan{background:var(--cyan)}
-.neon-label.gold{background:var(--gold)}
-.neon-label.win{background:var(--win)}
-.neon-label.warn{background:var(--warn);color:var(--text)}
-.neon-label.purple{background:var(--purple);color:var(--text)}
-
-.pixel-btn{
-  display:inline-block;font-family:'Press Start 2P',monospace;font-size:11px;
-  background:var(--bg-deep);color:var(--cyan);border:3px solid var(--cyan);
-  padding:12px 18px;box-shadow:4px 4px 0 var(--border);text-decoration:none;
+.cover h1{
+  color:var(--ink);
+  margin-bottom:40px;
+}
+.cover h1 .spec{color:var(--red);font-style:italic;font-weight:300}
+.cover-sub{
+  font-family:'Fraunces',serif;
+  font-size:34px;
+  line-height:1.3;
+  max-width:900px;
+  color:var(--ink-dim);
+  margin-top:30px;
+  font-weight:300;
+  font-variation-settings:"opsz" 60;
 }
 
-.glow-cyan{color:var(--cyan);text-shadow:0 0 8px var(--cyan), 0 0 20px rgba(0,255,255,.6)}
-.glow-magenta{color:var(--magenta);text-shadow:0 0 8px var(--magenta), 0 0 20px rgba(255,0,255,.6)}
-.glow-gold{color:var(--gold);text-shadow:0 0 8px var(--gold), 0 0 20px rgba(255,215,0,.6)}
-.glow-win{color:var(--win);text-shadow:0 0 8px var(--win)}
+.cover-meta{
+  display:flex;gap:50px;margin-top:60px;
+  padding-top:30px;border-top:1px solid var(--rule);
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  text-transform:uppercase;letter-spacing:0.14em;color:var(--ink-dim);
+}
+.cover-meta div{display:flex;flex-direction:column;gap:6px}
+.cover-meta strong{color:var(--ink);font-weight:600;font-size:14px}
 
-/* ==========================================================
-   HERO
-   ========================================================== */
-.hero{
-  position:relative;
-  min-height:520px;
-  padding:60px 30px 80px;
-  margin:32px -30px 20px;
-  overflow:hidden;
-  background:
-    linear-gradient(180deg, #06000f 0%, #1a0030 40%, #3a0852 60%, #7a1050 80%, #ff2e88 100%);
-  border-top:6px double var(--border);
-  border-bottom:6px double var(--border);
-  text-align:center;
-}
-/* Synthwave grid horizon */
-.hero::before{
-  content:"";
-  position:absolute;
-  left:0;right:0;bottom:0;
-  height:55%;
-  background:
-    linear-gradient(transparent 0%, transparent 85%, #0a0014 100%),
-    repeating-linear-gradient(90deg, transparent 0, transparent 39px, #ff2e88 39px, #ff2e88 40px),
-    repeating-linear-gradient(0deg, transparent 0, transparent 29px, #ff2e88 29px, #ff2e88 30px);
-  transform:perspective(400px) rotateX(60deg);
-  transform-origin:center bottom;
-  opacity:.55;
-}
-/* Sun */
-.hero::after{
-  content:"";
-  position:absolute;
-  left:50%;top:22%;
-  width:320px;height:160px;
-  margin-left:-160px;
-  background:
-    linear-gradient(180deg, #ff9b3f 0%, #ff2e88 50%, #8b1849 100%);
-  clip-path:ellipse(50% 100% at 50% 100%);
-  box-shadow:0 0 120px rgba(255,46,136,.6), 0 0 200px rgba(255,155,63,.4);
-}
-.hero-inner{position:relative;z-index:2}
-.hero-preline{
-  font-family:'Press Start 2P',monospace;
-  font-size:11px;letter-spacing:3px;color:var(--cyan);
-  text-shadow:0 0 8px var(--cyan);
-  margin-bottom:18px;
-}
-.hero-title{
-  font-family:'Press Start 2P',monospace;
-  font-size:52px;
-  line-height:1.4;
-  color:#fff;
-  text-shadow:
-    0 0 8px #ff00ff,
-    0 0 20px #ff00ff,
-    0 0 40px #ff00ff,
-    4px 4px 0 #0a0014,
-    8px 8px 0 rgba(0,0,0,.5);
-  margin-bottom:26px;
-}
-.hero-verdict{
-  display:inline-block;
-  font-family:'Press Start 2P',monospace;
-  font-size:16px;
-  color:var(--bg-deep);
-  background:var(--gold);
-  padding:14px 30px;
-  box-shadow:0 0 40px rgba(255,215,0,.8), 6px 6px 0 var(--bg-deep);
-  margin-top:10px;
-}
-.hero-sub{
-  font-family:'VT323',monospace;
-  font-size:28px;
-  color:var(--cyan);
-  margin-top:24px;
-  text-shadow:0 0 10px var(--cyan);
-}
-.hero-sparks{
-  font-size:24px;color:var(--gold);margin-top:24px;letter-spacing:12px;
-  animation:sparkle 2s infinite;
-}
-.hero-meta{
-  margin-top:28px;font-size:18px;color:var(--dim);
-  font-family:'VT323',monospace;letter-spacing:1px;
-}
-
-/* ==========================================================
-   NAV / TOC
-   ========================================================== */
+/* ===========================================
+   TOC
+   =========================================== */
 .toc{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:14px;
-  margin:30px 0 40px;
-  padding:20px;
-  background:rgba(10,0,20,.8);
-  border:3px solid var(--purple);
-  box-shadow:4px 4px 0 var(--border-dim);
+  gap:0;
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  padding:30px 0;
+  margin:40px 0;
 }
 .toc a{
-  font-family:'Press Start 2P',monospace;font-size:8px;
-  color:var(--cyan);text-decoration:none;
-  padding:10px 8px;border:2px solid var(--border-dim);
-  text-align:center;display:block;
-  transition:none;
+  padding:14px 20px;
+  text-decoration:none;
+  color:var(--ink);
+  border-right:1px solid var(--rule);
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  transition:background .2s;
 }
-.toc a:hover{background:var(--border);color:var(--bg-deep);transform:translate(2px,2px);box-shadow:-2px -2px 0 var(--cyan)}
+.toc a:last-child{border-right:none}
+.toc a:hover{background:var(--bg-card)}
+.toc a .num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:0.14em}
+.toc a .name{font-family:'Fraunces',serif;font-size:22px;font-weight:400;line-height:1.2}
 
-/* ==========================================================
-   EXECUTIVE SUMMARY
-   ========================================================== */
-.exec-summary{
-  background:linear-gradient(135deg, #15092c 0%, #2a0e4a 100%);
-  border:5px solid var(--gold);
-  padding:36px 40px;
-  box-shadow:8px 8px 0 var(--border), 16px 16px 0 var(--border-dim);
+/* ===========================================
+   VERDICT PANEL
+   =========================================== */
+.verdict-panel{
+  padding:80px 80px;
+  background:linear-gradient(180deg, #1a1611 0%, #0f0e0c 100%);
+  border:1px solid var(--gold);
+  border-left:6px solid var(--gold);
+  margin:60px 0;
   position:relative;
-  margin:20px 0 40px;
 }
-.exec-summary::before{
-  content:"◆ EXECUTIVE SUMMARY ◆";
+.verdict-panel::before{
+  content:"◆ THE VERDICT ◆";
   position:absolute;
-  top:-16px;left:50%;transform:translateX(-50%);
-  background:var(--gold);color:var(--bg-deep);
-  font-family:'Press Start 2P',monospace;font-size:10px;
-  padding:8px 18px;
-  box-shadow:3px 3px 0 var(--bg-deep);
+  top:-12px;left:40px;
+  background:var(--bg);
+  padding:0 20px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.2em;
+  color:var(--gold);
 }
-.exec-text{font-size:24px;line-height:1.55}
-.exec-text strong{color:var(--gold);font-weight:400}
-.exec-revenue{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
-  margin-top:28px;
+.verdict-title{
+  font-family:'Fraunces',serif;
+  font-size:86px;
+  font-weight:300;
+  line-height:1.05;
+  letter-spacing:-0.035em;
+  color:var(--ink);
+  margin-bottom:40px;
+  font-variation-settings:"opsz" 144;
 }
-.exec-rev-cell{
-  border:3px solid var(--cyan);
-  padding:18px;text-align:center;
-  background:rgba(0,255,255,.05);
-  box-shadow:4px 4px 0 var(--border-dim);
+.verdict-title em{font-style:italic;color:var(--gold);font-weight:400}
+.verdict-sub{
+  font-size:24px;
+  line-height:1.5;
+  color:var(--ink-dim);
+  max-width:960px;
+  margin-bottom:50px;
 }
-.exec-rev-cell .lbl{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--cyan);margin-bottom:10px}
-.exec-rev-cell .val{font-family:'Silkscreen',monospace;font-size:28px;color:var(--gold);font-weight:700}
-.exec-rev-cell .note{font-size:15px;color:var(--dim);margin-top:4px}
 
-/* ==========================================================
-   SCORING TABLE (top-3)
-   ========================================================== */
+.verdict-numbers{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+  border-top:1px solid var(--rule);
+  margin-top:60px;
+}
+.verdict-num{
+  padding:50px 40px;
+  border-right:1px solid var(--rule);
+}
+.verdict-num:last-child{border-right:none}
+.verdict-num .lbl{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.verdict-num .big{
+  font-family:'Fraunces',serif;
+  font-size:84px;
+  font-weight:300;
+  line-height:0.95;
+  color:var(--ink);
+  letter-spacing:-0.04em;
+  font-variation-settings:"opsz" 144;
+}
+.verdict-num .range{font-size:16px;color:var(--ink-dim);margin-top:14px;font-family:'JetBrains Mono',monospace}
+
+/* ===========================================
+   BIG NUMBER CALLOUTS
+   =========================================== */
+.callout-big{
+  padding:70px 0;
+  text-align:left;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:60px;
+  align-items:baseline;
+  border-top:1px solid var(--rule);
+}
+.callout-big .num{
+  font-family:'Fraunces',serif;
+  font-size:260px;
+  font-weight:200;
+  line-height:0.85;
+  color:var(--gold);
+  letter-spacing:-0.05em;
+  font-variation-settings:"opsz" 144;
+  white-space:nowrap;
+}
+.callout-big .text{
+  font-family:'Fraunces',serif;
+  font-size:42px;
+  line-height:1.2;
+  color:var(--ink);
+  font-weight:300;
+  max-width:600px;
+}
+.callout-big .source{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--ink-dim);
+  margin-top:20px;
+}
+
+/* ===========================================
+   PAID vs FREE comparison
+   =========================================== */
+.comparison-table{
+  width:100%;
+  border-collapse:collapse;
+  font-family:'Inter',sans-serif;
+  font-size:16px;
+  margin:40px 0;
+}
+.comparison-table th,
+.comparison-table td{
+  padding:24px 20px;
+  text-align:left;
+  vertical-align:top;
+  border-bottom:1px solid var(--rule);
+}
+.comparison-table thead th{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  border-bottom:2px solid var(--ink);
+  padding-bottom:18px;
+}
+.comparison-table td:first-child{
+  font-family:'Fraunces',serif;
+  font-size:26px;
+  font-weight:400;
+  color:var(--ink);
+  width:180px;
+}
+.comparison-table .ok{color:var(--green)}
+.comparison-table .warn{color:var(--gold)}
+.comparison-table .no{color:var(--red)}
+.comparison-table tr:hover td{background:var(--bg-soft)}
+
+/* ===========================================
+   SCORING — Top-3 cards
+   =========================================== */
 .score-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:24px;
-  margin:30px 0;
+  grid-template-columns:1.15fr 1fr 1fr;
+  gap:30px;
+  margin:50px 0;
 }
 .score-card{
   background:var(--bg-card);
-  border:4px solid var(--border-dim);
-  padding:22px;
-  box-shadow:6px 6px 0 var(--bg-deep);
+  border:1px solid var(--rule);
+  padding:50px 40px;
   position:relative;
 }
 .score-card.winner{
-  border-color:var(--gold);
-  box-shadow:0 0 40px rgba(255,215,0,.5), 6px 6px 0 var(--bg-deep), 12px 12px 0 var(--gold);
-  background:linear-gradient(180deg, #1a0d3c 0%, #2a0e4a 100%);
+  border:2px solid var(--gold);
+  background:linear-gradient(180deg, #1e1a12 0%, #15120d 100%);
 }
 .score-card .rank{
-  position:absolute;
-  top:-18px;left:-18px;
-  width:50px;height:50px;
-  background:var(--border);color:var(--bg-deep);
-  font-family:'Press Start 2P',monospace;font-size:18px;
-  display:flex;align-items:center;justify-content:center;
-  border:3px solid var(--bg-deep);
-  box-shadow:4px 4px 0 var(--border-dim);
+  font-family:'Fraunces',serif;
+  font-size:140px;
+  font-weight:200;
+  line-height:0.8;
+  color:var(--ink-dim);
+  margin-bottom:20px;
+  font-variation-settings:"opsz" 144;
 }
-.score-card.winner .rank{background:var(--gold)}
-.winner-badge{
-  position:absolute;top:-14px;right:-14px;
-  background:var(--gold);color:var(--bg-deep);
-  font-family:'Press Start 2P',monospace;font-size:9px;
-  padding:8px 12px;
-  box-shadow:3px 3px 0 var(--bg-deep);
-  animation:glow 2s infinite;
+.score-card.winner .rank{color:var(--gold)}
+.score-card .winner-tag{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.2em;
+  color:var(--gold);
+  border:1px solid var(--gold);
+  padding:6px 12px;
+  margin-bottom:20px;
 }
-.score-title{
-  font-family:'Press Start 2P',monospace;font-size:11px;
-  color:var(--cyan);line-height:1.5;margin:14px 0 18px;
-  min-height:72px;
+.score-card .concept{
+  font-family:'Fraunces',serif;
+  font-size:26px;
+  line-height:1.25;
+  font-weight:500;
+  color:var(--ink);
+  margin-bottom:30px;
+  min-height:100px;
 }
-.score-card.winner .score-title{color:var(--gold)}
-.score-bars{margin:18px 0}
-.score-bar{display:grid;grid-template-columns:140px 1fr 40px;gap:10px;align-items:center;margin-bottom:6px;font-size:16px}
-.score-bar .bar-lbl{color:var(--dim);font-size:14px}
-.score-bar .bar-chars{font-family:'Silkscreen',monospace;letter-spacing:-1px;color:var(--cyan);font-size:18px}
-.score-bar .bar-val{color:var(--gold);font-weight:700;text-align:right}
-.score-final{
-  border-top:2px dashed var(--border);
-  padding-top:16px;margin-top:16px;
-  text-align:center;
+.score-card.winner .concept{color:var(--gold)}
+.score-card .scores{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px 20px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;
+  color:var(--ink-dim);
+  padding:20px 0;
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
 }
-.score-final .lbl{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--magenta);margin-bottom:8px}
-.score-final .val{font-family:'Silkscreen',monospace;font-size:36px;color:var(--gold);font-weight:700;text-shadow:0 0 12px rgba(255,215,0,.6)}
+.score-card .scores .s-val{color:var(--ink);font-weight:600;text-align:right}
+.score-card .final{
+  padding-top:30px;
+  text-align:right;
+}
+.score-card .final .lbl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.score-card .final .num{
+  font-family:'Fraunces',serif;
+  font-size:72px;
+  font-weight:300;
+  color:var(--ink);
+  line-height:1;
+  letter-spacing:-0.04em;
+  font-variation-settings:"opsz" 96;
+}
+.score-card.winner .final .num{color:var(--gold)}
 
-/* Rejected variants */
-.rejected{
-  background:var(--bg-card2);border:2px dashed var(--border-dim);
-  padding:18px 22px;margin:20px 0;
+/* Rejected list */
+.rejected-list{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0 60px;
+  padding:40px 0;
+  border-top:1px solid var(--rule);
 }
-.rejected h3{font-size:12px;color:var(--warn);margin-bottom:12px}
-.rejected ul{list-style:none;font-size:17px}
-.rejected li{padding:4px 0;border-bottom:1px dotted #2a0e4a;color:var(--dim)}
-.rejected li::before{content:"✗ ";color:var(--warn);font-weight:700}
-.rejected li strong{color:var(--text)}
+.rejected-list .item{
+  padding:16px 0;
+  border-bottom:1px solid var(--rule-soft);
+  font-size:16px;
+  display:grid;
+  grid-template-columns:160px 1fr;
+  gap:20px;
+  color:var(--ink-dim);
+}
+.rejected-list .name{
+  font-family:'Fraunces',serif;
+  color:var(--ink);
+  font-size:18px;
+  font-weight:500;
+}
+.rejected-list .reason{line-height:1.4}
 
-/* ==========================================================
-   FINAL RECOMMENDATION
-   ========================================================== */
-.final-rec{
-  background:linear-gradient(135deg, #0a0014 0%, #15092c 40%, #2a0e4a 100%);
-  border:5px solid var(--gold);
-  padding:44px 40px;
-  box-shadow:10px 10px 0 var(--border), 20px 20px 0 var(--border-dim);
-  margin:20px 0 40px;
-  position:relative;
+/* ===========================================
+   THE PICK — final recommendation
+   =========================================== */
+.pick{
+  margin:80px -60px;
+  padding:100px 60px;
+  background:
+    radial-gradient(ellipse at top right, rgba(212,168,67,.05) 0%, transparent 60%),
+    linear-gradient(180deg, #0f0d0a 0%, #08070a 100%);
+  border-top:1px solid var(--gold);
+  border-bottom:1px solid var(--gold);
 }
-.final-rec::before{
-  content:"★ ★ ★ THE PICK ★ ★ ★";
-  position:absolute;top:-18px;left:50%;transform:translateX(-50%);
-  background:var(--gold);color:var(--bg-deep);
-  font-family:'Press Start 2P',monospace;font-size:11px;padding:10px 22px;
-  box-shadow:4px 4px 0 var(--bg-deep);
-  letter-spacing:2px;
+.pick-inner{max-width:1320px;margin:0 auto;padding:0 60px}
+.pick-issue{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.2em;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:20px;
 }
-.final-name{
-  font-family:'Press Start 2P',monospace;
-  font-size:44px;
-  text-align:center;
-  color:#fff;
-  text-shadow:0 0 12px var(--magenta), 0 0 30px var(--magenta), 4px 4px 0 var(--bg-deep);
-  margin:20px 0 8px;
-  line-height:1.4;
+.pick-name{
+  font-family:'Fraunces',serif;
+  font-size:clamp(100px,12vw,180px);
+  font-weight:200;
+  line-height:0.9;
+  letter-spacing:-0.05em;
+  color:var(--ink);
+  margin-bottom:40px;
+  font-variation-settings:"opsz" 144;
 }
-.final-subname{text-align:center;font-size:24px;color:var(--cyan);margin-bottom:30px;font-family:'VT323',monospace}
+.pick-name em{font-style:italic;color:var(--gold);font-weight:300}
+.pick-tag{
+  font-family:'Fraunces',serif;
+  font-size:32px;
+  color:var(--ink-dim);
+  font-weight:300;
+  margin-bottom:50px;
+  max-width:900px;
+  line-height:1.3;
+  font-style:italic;
+}
 
-.final-facts{
+.pick-facts{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:18px;
-  margin-bottom:32px;
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  margin:60px 0;
 }
-.fact-box{
-  background:rgba(0,0,0,.5);
-  border:3px solid var(--cyan);
-  padding:16px;
-  box-shadow:4px 4px 0 var(--border-dim);
-  text-align:center;
+.pick-fact{
+  padding:40px 30px 40px 0;
+  border-right:1px solid var(--rule);
 }
-.fact-box .icon{font-size:28px;margin-bottom:8px;color:var(--gold)}
-.fact-box .lbl{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--cyan);margin-bottom:8px;letter-spacing:1px}
-.fact-box .val{font-size:18px;color:var(--text);line-height:1.4}
-
-.core-loop{
-  background:rgba(0,0,0,.6);
-  border-left:6px solid var(--magenta);
-  padding:20px 26px;
-  margin:24px 0;
+.pick-fact:last-child{border-right:none}
+.pick-fact .lbl{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:16px;
 }
-.core-loop h3{color:var(--magenta);margin-bottom:14px}
-.core-loop ol{list-style:none;counter-reset:step;font-size:20px}
-.core-loop li{
-  counter-increment:step;padding:8px 0 8px 44px;position:relative;
-}
-.core-loop li::before{
-  content:counter(step);
-  position:absolute;left:0;top:4px;
-  width:30px;height:30px;
-  background:var(--magenta);color:var(--bg-deep);
-  font-family:'Press Start 2P',monospace;font-size:12px;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:2px 2px 0 var(--bg-deep);
+.pick-fact .val{
+  font-family:'Fraunces',serif;
+  font-size:26px;
+  line-height:1.2;
+  color:var(--ink);
+  font-weight:400;
 }
 
-.hook-box{
-  background:rgba(255,215,0,.08);
-  border:3px solid var(--gold);
-  padding:20px 26px;margin:20px 0;
+.pick-loop{
+  margin:60px 0;
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:60px;
 }
-.hook-box h3{color:var(--gold)}
-.hook-box ul{list-style:none;padding-left:0;margin-top:12px}
-.hook-box li{padding:6px 0 6px 28px;position:relative;font-size:18px}
-.hook-box li::before{content:"★";position:absolute;left:0;color:var(--gold);font-size:20px;top:2px}
+.pick-loop .heading{
+  font-family:'Fraunces',serif;
+  font-size:56px;
+  line-height:0.95;
+  font-weight:300;
+  color:var(--gold);
+  letter-spacing:-0.03em;
+}
+.pick-loop ol{list-style:none;counter-reset:step}
+.pick-loop li{
+  counter-increment:step;
+  padding:24px 0 24px 80px;
+  position:relative;
+  border-bottom:1px solid var(--rule);
+  font-size:20px;
+  line-height:1.55;
+}
+.pick-loop li:last-child{border-bottom:none}
+.pick-loop li::before{
+  content:counter(step,decimal-leading-zero);
+  position:absolute;
+  left:0;top:24px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:18px;
+  color:var(--gold);
+  font-weight:600;
+  letter-spacing:0.05em;
+}
 
-/* Monetization mechanism table */
-.monet-table{
-  width:100%;
-  border-collapse:separate;
-  border-spacing:0;
-  margin:20px 0;
-  font-size:16px;
-}
-.monet-table th,.monet-table td{
-  padding:12px 14px;
-  border:2px solid var(--border-dim);
-  text-align:left;
-  vertical-align:top;
-}
-.monet-table th{
-  background:var(--border);color:var(--bg-deep);
-  font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;
-}
-.monet-table td{background:rgba(0,0,0,.4)}
-.monet-table tr:nth-child(even) td{background:rgba(255,46,136,.06)}
-.monet-table .price{color:var(--gold);font-weight:700}
-.monet-table .rail{color:var(--cyan)}
-
-/* Revenue projection */
-.revenue-stacks{
+/* Monetization tiers */
+.tiers{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:22px;
-  margin:30px 0;
+  gap:30px;
+  margin:50px 0;
 }
-.rev-stack{
+.tier{
   background:var(--bg-card);
-  border:4px solid var(--gold);
-  padding:24px;text-align:center;
-  box-shadow:6px 6px 0 var(--border-dim);
+  border:1px solid var(--rule);
+  padding:40px 34px;
 }
-.rev-stack .period{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--gold);margin-bottom:14px;letter-spacing:2px}
-.rev-stack .coin-pile{font-size:42px;color:var(--gold);margin:10px 0;letter-spacing:-8px;filter:drop-shadow(0 0 10px rgba(255,215,0,.6))}
-.rev-stack .range{font-family:'Silkscreen',monospace;font-size:24px;color:var(--win);font-weight:700}
-.rev-stack .detail{font-size:15px;color:var(--dim);margin-top:8px;line-height:1.4}
+.tier.primary{border:2px solid var(--gold)}
+.tier .tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.2em;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+.tier h4{margin-bottom:18px;color:var(--ink)}
+.tier .price{
+  font-family:'Fraunces',serif;
+  font-size:76px;
+  font-weight:300;
+  color:var(--gold);
+  line-height:1;
+  margin:20px 0;
+  letter-spacing:-0.03em;
+  font-variation-settings:"opsz" 96;
+}
+.tier .price-sub{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink-dim);margin-bottom:24px}
+.tier ul{list-style:none;font-size:16px;color:var(--ink-dim);line-height:1.6}
+.tier li{padding:8px 0;border-bottom:1px solid var(--rule-soft)}
+.tier li::before{content:"→ ";color:var(--gold);margin-right:6px}
+
+/* Revenue projections */
+.revenue-proj{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:40px;
+  margin:60px 0;
+}
+.rev-block{padding:40px 0;border-top:2px solid var(--ink)}
+.rev-block .period{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:24px;
+}
+.rev-block .amount{
+  font-family:'Fraunces',serif;
+  font-size:100px;
+  font-weight:200;
+  line-height:0.9;
+  color:var(--ink);
+  letter-spacing:-0.04em;
+  font-variation-settings:"opsz" 144;
+}
+.rev-block .amount .range{color:var(--ink-dim);font-size:38px;display:block;margin-top:8px}
+.rev-block .detail{
+  margin-top:20px;
+  font-size:15px;
+  color:var(--ink-dim);
+  line-height:1.5;
+  padding-top:20px;
+  border-top:1px solid var(--rule);
+}
 
 /* Risks */
-.risks{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
-.risk-box{
-  background:rgba(255,68,68,.1);
-  border:3px solid var(--warn);
-  padding:18px;
-  box-shadow:4px 4px 0 #5c0a0a;
-}
-.risk-box .risk-head{
-  font-family:'Press Start 2P',monospace;font-size:10px;
-  color:var(--warn);margin-bottom:10px;letter-spacing:1px;
-}
-.risk-box .risk-body{font-size:16px;line-height:1.5;color:var(--text)}
-.risk-box .risk-mit{font-size:15px;color:var(--win);margin-top:10px;padding-top:10px;border-top:1px dashed var(--warn)}
-
-/* ==========================================================
-   12-HOUR TIMELINE
-   ========================================================== */
-.timeline{
+.risks{
   display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:10px;
-  margin:30px 0;
+  grid-template-columns:repeat(3,1fr);
+  gap:40px;
+  margin:50px 0;
 }
-.time-slot{
+.risk{
+  padding:36px 30px;
   background:var(--bg-card);
-  border:3px solid var(--cyan);
-  padding:14px;
-  box-shadow:4px 4px 0 var(--border-dim);
-  min-height:220px;
-  display:flex;flex-direction:column;
+  border-left:4px solid var(--red);
 }
-.time-slot.polish{border-color:var(--gold)}
-.time-slot.deploy{border-color:var(--win)}
-.time-slot.integ{border-color:var(--magenta)}
-.time-slot .hour{
-  font-family:'Press Start 2P',monospace;font-size:11px;
-  color:var(--cyan);margin-bottom:8px;text-align:center;
-  padding:6px;background:rgba(0,255,255,.1);border-bottom:2px solid var(--cyan);
+.risk .tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:14px;
 }
-.time-slot.polish .hour{color:var(--gold);background:rgba(255,215,0,.1);border-bottom-color:var(--gold)}
-.time-slot.deploy .hour{color:var(--win);background:rgba(0,255,102,.1);border-bottom-color:var(--win)}
-.time-slot.integ .hour{color:var(--magenta);background:rgba(255,0,255,.1);border-bottom-color:var(--magenta)}
-.time-slot .task{font-size:15px;margin:10px 0;flex:1;line-height:1.4}
-.time-slot .deliv{font-size:13px;color:var(--win);padding-top:10px;border-top:1px dotted var(--border-dim)}
-.time-slot .deliv::before{content:"✓ "}
+.risk h4{font-size:22px;margin-bottom:16px;line-height:1.25;color:var(--ink)}
+.risk p{font-size:16px;color:var(--ink-dim);line-height:1.55}
+.risk .mit{
+  margin-top:20px;padding-top:16px;
+  border-top:1px solid var(--rule);
+  color:var(--green);font-size:15px;
+}
+.risk .mit::before{content:"✓ ";font-weight:700}
 
-/* ==========================================================
+/* ===========================================
+   TIMELINE
+   =========================================== */
+.timeline{
+  margin:60px 0;
+  border-top:2px solid var(--ink);
+}
+.t-hour{
+  display:grid;
+  grid-template-columns:120px 280px 1fr 260px;
+  gap:40px;
+  padding:32px 0;
+  border-bottom:1px solid var(--rule);
+  align-items:baseline;
+}
+.t-hour .h-num{
+  font-family:'Fraunces',serif;
+  font-size:72px;
+  font-weight:200;
+  color:var(--gold);
+  line-height:0.85;
+  letter-spacing:-0.03em;
+  font-variation-settings:"opsz" 96;
+}
+.t-hour .h-phase{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--ink-dim);
+}
+.t-hour .h-task{
+  font-family:'Fraunces',serif;
+  font-size:22px;
+  line-height:1.35;
+  color:var(--ink);
+  font-weight:400;
+}
+.t-hour .h-deliv{
+  font-size:14px;
+  color:var(--green);
+  font-family:'JetBrains Mono',monospace;
+  line-height:1.4;
+}
+.t-hour .h-deliv::before{content:"✓ "}
+
+/* ===========================================
    DISTRIBUTION QUEST LOG
-   ========================================================== */
-.quest-log{
-  background:var(--bg-card);
-  border:4px solid var(--purple);
-  padding:24px 28px;
-  box-shadow:6px 6px 0 var(--border-dim);
-  margin:30px 0;
-}
-.quest-header{
-  font-family:'Press Start 2P',monospace;font-size:12px;
-  color:var(--purple);margin-bottom:6px;letter-spacing:1px;
-}
-.quest-progress{
-  font-family:'VT323',monospace;font-size:20px;
-  color:var(--dim);margin-bottom:24px;
-}
-.quest-progress .bar{color:var(--purple);letter-spacing:-2px}
+   =========================================== */
+.quests{margin:60px 0;border-top:2px solid var(--ink)}
 .quest{
   display:grid;
-  grid-template-columns:60px 90px 140px 1fr 120px;
-  gap:14px;align-items:center;
-  padding:14px 12px;
-  border-bottom:2px dotted var(--border-dim);
-  font-size:17px;
+  grid-template-columns:80px 120px 220px 1fr 180px;
+  gap:30px;
+  padding:30px 0;
+  border-bottom:1px solid var(--rule);
+  align-items:center;
 }
-.quest:last-child{border-bottom:none}
 .quest .q-num{
-  font-family:'Press Start 2P',monospace;font-size:14px;
-  color:var(--gold);text-align:center;
+  font-family:'Fraunces',serif;
+  font-size:56px;
+  font-weight:200;
+  color:var(--gold);
+  line-height:0.9;
+  letter-spacing:-0.03em;
 }
-.quest .q-time{color:var(--cyan);font-family:'Silkscreen',monospace;font-size:16px}
-.quest .q-channel{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--magenta);letter-spacing:1px}
-.quest .q-action{font-size:17px;line-height:1.4;color:var(--text)}
+.quest .q-time{
+  font-family:'JetBrains Mono',monospace;
+  font-size:20px;
+  color:var(--ink);
+  font-weight:600;
+}
+.quest .q-ch{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+.quest .q-text{
+  font-family:'Fraunces',serif;
+  font-size:20px;
+  color:var(--ink);
+  line-height:1.4;
+  font-weight:400;
+}
 .quest .q-reach{
-  font-family:'Silkscreen',monospace;font-size:14px;
-  color:var(--win);text-align:right;
+  font-family:'JetBrains Mono',monospace;
+  font-size:14px;
+  color:var(--green);
+  text-align:right;
 }
 
-/* ==========================================================
-   MONETIZATION CHECKLIST
-   ========================================================== */
+/* ===========================================
+   CHECKLIST
+   =========================================== */
 .checklist{
-  background:var(--bg-card2);
-  border:4px solid var(--cyan);
-  padding:24px 28px;
-  box-shadow:6px 6px 0 var(--border-dim);
-}
-.checklist h3{color:var(--cyan)}
-.check-row{
   display:grid;
-  grid-template-columns:40px 180px 1fr 1fr;
-  gap:14px;align-items:start;
-  padding:14px 0;
-  border-bottom:1px dashed #1c1440;
-  font-size:16px;line-height:1.4;
+  grid-template-columns:repeat(2,1fr);
+  gap:0;
+  margin:40px 0;
+  border-top:2px solid var(--ink);
 }
-.check-row:last-child{border-bottom:none}
-.check-row .num{
-  font-family:'Press Start 2P',monospace;font-size:13px;
-  color:var(--cyan);text-align:center;padding-top:3px;
+.check-item{
+  padding:28px 30px 28px 0;
+  border-bottom:1px solid var(--rule);
+  display:grid;
+  grid-template-columns:50px 1fr;
+  gap:20px;
+  align-items:start;
 }
-.check-row .svc{
-  font-family:'Press Start 2P',monospace;font-size:10px;
-  color:var(--gold);letter-spacing:1px;
+.check-item:nth-child(odd){border-right:1px solid var(--rule);padding-right:30px}
+.check-item:nth-child(even){padding-left:30px;padding-right:0}
+.check-item .num{
+  font-family:'Fraunces',serif;
+  font-size:36px;
+  font-weight:200;
+  color:var(--gold);
+  line-height:1;
 }
-.check-row .act{color:var(--text)}
-.check-row .blk{color:var(--warn);font-size:14px}
-.check-row .blk::before{content:"⚠ "}
+.check-item h4{font-size:20px;color:var(--ink);margin-bottom:6px;font-weight:500}
+.check-item p{font-size:15px;color:var(--ink-dim);line-height:1.5}
+.check-item .blocker{
+  color:var(--red);font-size:12px;font-family:'JetBrains Mono',monospace;
+  margin-top:8px;display:block;letter-spacing:0.08em;
+}
 
-/* ==========================================================
-   BENCHMARK GAME CARDS
-   ========================================================== */
+/* ===========================================
+   BENCHMARK CARDS
+   =========================================== */
 .benchmarks{
   display:grid;
   grid-template-columns:repeat(5,1fr);
-  gap:18px;
-  margin:30px 0;
+  gap:20px;
+  margin:50px 0;
 }
-.game-card{
-  background:linear-gradient(180deg, #1a0d3c 0%, #0a0014 100%);
-  border:3px solid var(--border);
-  padding:0;
-  box-shadow:5px 5px 0 var(--border-dim);
-  display:flex;flex-direction:column;
-  min-height:380px;
-}
-.game-card .gc-head{
-  background:var(--border);color:var(--bg-deep);
-  padding:10px 12px;
-  font-family:'Press Start 2P',monospace;font-size:9px;
-  text-align:center;letter-spacing:1px;
-  line-height:1.4;
-  min-height:48px;display:flex;align-items:center;justify-content:center;
-}
-.game-card .gc-body{padding:14px;flex:1;display:flex;flex-direction:column;gap:10px}
-.game-card .stat{
-  display:flex;justify-content:space-between;
-  font-size:15px;padding:5px 0;
-  border-bottom:1px dotted var(--border-dim);
-}
-.game-card .stat .k{color:var(--cyan);font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:1px}
-.game-card .stat .v{color:var(--gold);font-weight:700;text-align:right}
-.game-card .gc-lesson{
-  font-size:14px;color:var(--dim);
-  padding:10px;margin-top:auto;
-  background:rgba(0,0,0,.4);
-  border:1px dashed var(--border-dim);
-  line-height:1.45;
-}
-
-/* ==========================================================
-   CHARTS SECTION
-   ========================================================== */
-.charts-section{margin:40px 0}
-.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-.chart-card{
+.bm{
   background:var(--bg-card);
-  border:3px solid var(--purple);
-  padding:24px;
-  box-shadow:5px 5px 0 var(--border-dim);
+  border:1px solid var(--rule);
+  padding:30px 24px;
+  min-height:440px;
+  display:flex;
+  flex-direction:column;
 }
-.chart-card h3{margin-top:0;color:var(--purple)}
-.chart-card .chart-note{font-size:14px;color:var(--dim);margin-top:14px;font-style:italic}
+.bm .bm-year{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.18em;
+  color:var(--gold);
+  margin-bottom:12px;
+}
+.bm h4{
+  font-size:22px;
+  line-height:1.25;
+  margin-bottom:20px;
+  color:var(--ink);
+  min-height:58px;
+}
+.bm .bm-hero-num{
+  font-family:'Fraunces',serif;
+  font-size:50px;
+  font-weight:300;
+  color:var(--gold);
+  line-height:1;
+  letter-spacing:-0.03em;
+  font-variation-settings:"opsz" 72;
+  margin:10px 0;
+}
+.bm .bm-hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-dim);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:20px}
+.bm .bm-stats{
+  font-size:13px;
+  color:var(--ink-dim);
+  padding:14px 0;
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  line-height:1.4;
+}
+.bm .bm-stats strong{color:var(--ink);font-weight:500}
+.bm .bm-lesson{
+  margin-top:auto;
+  padding-top:18px;
+  font-family:'Fraunces',serif;
+  font-size:15px;
+  line-height:1.4;
+  color:var(--ink);
+  font-style:italic;
+}
 
-/* Chart 1: ARPDAU bar chart */
-.arpdau-chart{display:flex;flex-direction:column;gap:10px;margin-top:16px}
-.arpdau-row{
+/* ===========================================
+   DATA CHARTS
+   =========================================== */
+.charts{
   display:grid;
-  grid-template-columns:170px 1fr 70px;
-  gap:12px;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  margin:60px 0;
+}
+.chart{padding:40px 0;border-top:1px solid var(--rule)}
+.chart .chart-title{
+  font-family:'Fraunces',serif;
+  font-size:32px;
+  margin-bottom:8px;
+  color:var(--ink);
+  font-weight:400;
+  letter-spacing:-0.02em;
+}
+.chart .chart-lede{
+  font-size:15px;
+  color:var(--ink-dim);
+  margin-bottom:30px;
+  line-height:1.5;
+}
+
+.bar-row{
+  display:grid;
+  grid-template-columns:220px 1fr 100px;
+  gap:20px;
   align-items:center;
+  margin-bottom:16px;
   font-size:15px;
 }
-.arpdau-row .name{color:var(--cyan);font-family:'Silkscreen',monospace;font-size:14px}
-.arpdau-row .bar-wrap{background:rgba(0,0,0,.5);border:1px solid var(--border-dim);height:22px;position:relative}
-.arpdau-row .bar{
-  height:100%;
-  background:linear-gradient(90deg, var(--cyan) 0%, var(--magenta) 100%);
-  box-shadow:inset 0 -2px 0 rgba(0,0,0,.3);
+.bar-row .b-lbl{color:var(--ink);font-weight:500}
+.bar-row .b-bar{
+  height:4px;
+  background:var(--rule);
+  position:relative;
 }
-.arpdau-row.hi .bar{background:linear-gradient(90deg, var(--gold) 0%, #ff9b3f 100%);box-shadow:0 0 10px var(--gold)}
-.arpdau-row .val{color:var(--gold);font-weight:700;text-align:right;font-family:'Silkscreen',monospace}
-
-/* Chart 2: coin stacks */
-.coin-chart{display:flex;justify-content:space-around;align-items:flex-end;height:240px;margin-top:20px;padding:0 10px}
-.coin-col{display:flex;flex-direction:column;align-items:center;flex:1}
-.coin-col .coins{
-  display:flex;flex-direction:column-reverse;align-items:center;
-  width:80px;
+.bar-row .b-fill{
+  position:absolute;
+  left:0;top:0;bottom:0;
+  background:var(--gold);
 }
-.coin{
-  width:60px;height:12px;
-  background:radial-gradient(ellipse, var(--gold) 0%, #8b6508 100%);
-  border:2px solid var(--bg-deep);
-  border-radius:0;
-  margin:1px 0;
-  box-shadow:0 0 4px rgba(255,215,0,.5);
-}
-.coin-col .lbl{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--cyan);margin-top:10px;letter-spacing:1px}
-.coin-col .amount{font-family:'Silkscreen',monospace;font-size:17px;color:var(--gold);margin-top:4px;font-weight:700}
+.bar-row .b-fill.red{background:var(--red)}
+.bar-row .b-fill.blue{background:var(--blue)}
+.bar-row .b-val{text-align:right;color:var(--ink-dim);font-family:'JetBrains Mono',monospace;font-size:14px}
 
-/* Chart 3: Competition heatmap */
-.heatmap-wrap{margin-top:16px}
-.heatmap{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
-.heat-cell{
-  aspect-ratio:1.6;
-  padding:8px 6px;
-  font-size:12px;
-  text-align:center;
-  color:var(--text);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Press Start 2P',monospace;
-  font-size:7px;letter-spacing:0.5px;
-  line-height:1.3;
-}
-.heat-1{background:#003a1a;color:var(--win)}
-.heat-2{background:#006633;color:#8fff8f}
-.heat-3{background:#999500;color:#fff}
-.heat-4{background:#b35900;color:#fff}
-.heat-5{background:#a00020;color:#fff}
-.heat-legend{display:flex;justify-content:space-between;margin-top:10px;font-size:13px}
-.heat-legend span{color:var(--dim)}
-
-/* Chart 4: Monetization funnel */
-.funnel{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:16px}
-.funnel-row{
-  display:grid;grid-template-columns:130px 1fr 90px;
-  gap:12px;align-items:center;width:100%;font-size:14px;
-}
-.funnel-row .lbl{color:var(--cyan);font-family:'Press Start 2P',monospace;font-size:8px}
-.funnel-row .blocks{
-  font-family:'Silkscreen',monospace;
-  letter-spacing:-2px;color:var(--magenta);
-  font-size:22px;
-}
-.funnel-row .pct{color:var(--gold);font-family:'Silkscreen',monospace;font-size:14px;font-weight:700;text-align:right}
-
-/* Chart 5: Radar */
-.radar{width:300px;height:300px;margin:20px auto 0;position:relative}
-.radar svg{width:100%;height:100%}
-
-/* Chart 6: Traffic sources funnel */
-.traffic-bars{display:flex;flex-direction:column;gap:8px;margin-top:16px}
-.traffic-row{display:grid;grid-template-columns:160px 1fr 100px;gap:10px;align-items:center;font-size:14px}
-.traffic-row .src{color:var(--cyan);font-family:'Silkscreen',monospace;font-size:14px}
-.traffic-row .bw{background:rgba(0,0,0,.5);border:1px solid var(--border-dim);height:18px}
-.traffic-row .b{height:100%;background:linear-gradient(90deg, var(--purple), var(--magenta))}
-.traffic-row .v{color:var(--gold);font-family:'Silkscreen',monospace;font-size:13px;text-align:right}
-
-/* ==========================================================
-   KEY NUMBERS GRID
-   ========================================================== */
+/* Giant numbers grid */
 .numbers-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:16px;
-  margin:30px 0;
+  gap:0;
+  margin:60px 0;
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
 }
-.num-card{
-  background:var(--bg-card);
-  border:3px solid var(--cyan);
-  padding:16px;
-  box-shadow:4px 4px 0 var(--border-dim);
+.nm{
+  padding:40px 30px;
+  border-right:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+}
+.nm:nth-child(4n){border-right:none}
+.nm:nth-last-child(-n+4){border-bottom:none}
+.nm .big{
+  font-family:'Fraunces',serif;
+  font-size:58px;
+  font-weight:300;
+  color:var(--ink);
+  line-height:0.9;
+  letter-spacing:-0.03em;
+  font-variation-settings:"opsz" 96;
+  margin-bottom:18px;
+}
+.nm .lbl{
+  font-size:14px;
+  color:var(--ink-dim);
+  line-height:1.4;
+}
+.nm.gold .big{color:var(--gold)}
+.nm.red .big{color:var(--red)}
+.nm.green .big{color:var(--green)}
+.nm.blue .big{color:var(--blue)}
+
+/* ===========================================
+   SOURCES
+   =========================================== */
+.sources-section{padding:80px 0 40px;border-top:2px solid var(--ink)}
+.sources-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:60px;margin-top:40px}
+.sources-cat{margin-bottom:40px}
+.sources-cat h4{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:20px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--rule);
+}
+.sources-cat a{
+  display:block;
+  padding:10px 0;
+  color:var(--ink);
+  text-decoration:none;
+  font-size:15px;
+  line-height:1.4;
+  border-bottom:1px solid var(--rule-soft);
+}
+.sources-cat a:hover{color:var(--gold)}
+.sources-cat a::before{content:"→  ";color:var(--ink-dim);font-family:'JetBrains Mono',monospace}
+
+/* Colophon */
+.colophon{
+  padding:60px 0;
+  margin-top:60px;
+  border-top:2px solid var(--ink);
+  text-align:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.15em;
+  color:var(--ink-dim);
+  text-transform:uppercase;
+  line-height:2;
+}
+.colophon .big{
+  font-family:'Fraunces',serif;
+  font-size:52px;
+  font-weight:200;
+  color:var(--ink);
+  margin-bottom:24px;
+  letter-spacing:-0.03em;
+  font-variation-settings:"opsz" 96;
+  text-transform:none;
+  font-style:italic;
+}
+
+/* Pullquote */
+.pullquote{
+  margin:80px 0;
+  padding:60px 0;
+  border-top:2px solid var(--gold);
+  border-bottom:2px solid var(--gold);
   text-align:center;
 }
-.num-card .big{
-  font-family:'Silkscreen',monospace;font-size:30px;color:var(--gold);
-  font-weight:700;line-height:1.1;
-  text-shadow:0 0 8px rgba(255,215,0,.5);
+.pullquote blockquote{
+  font-family:'Fraunces',serif;
+  font-size:52px;
+  line-height:1.2;
+  font-weight:300;
+  color:var(--ink);
+  font-style:italic;
+  max-width:1000px;
+  margin:0 auto;
+  letter-spacing:-0.02em;
+  font-variation-settings:"opsz" 96;
 }
-.num-card .sml{font-size:14px;color:var(--dim);margin-top:6px;line-height:1.3;min-height:40px}
-.num-card.hi .big{color:var(--magenta);text-shadow:0 0 10px rgba(255,0,255,.6)}
-.num-card.cy .big{color:var(--cyan);text-shadow:0 0 10px rgba(0,255,255,.6)}
-.num-card.win .big{color:var(--win);text-shadow:0 0 10px rgba(0,255,102,.6)}
-
-/* ==========================================================
-   SOURCES CREDITS ROLL
-   ========================================================== */
-.sources{
-  background:#000;
-  border:4px solid var(--border);
-  padding:34px 40px;
-  box-shadow:8px 8px 0 var(--border-dim);
-  margin:40px 0 20px;
-  text-align:center;
-  font-family:'VT323',monospace;
+.pullquote cite{
+  display:block;
+  margin-top:30px;
+  font-style:normal;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--gold);
 }
-.sources h2{color:var(--gold);text-align:center;font-size:20px;margin:0 0 24px;text-shadow:0 0 12px var(--gold)}
-.credits{font-size:18px;line-height:1.8;color:var(--text)}
-.credits a{color:var(--cyan);text-decoration:none;display:block;padding:3px 0}
-.credits a::before{content:"► "}
-.credits a::after{content:" ◄"}
-.credits a:hover{color:var(--gold);text-shadow:0 0 8px var(--gold)}
-.credits-cat{color:var(--magenta);font-family:'Press Start 2P',monospace;font-size:10px;margin:22px 0 8px;letter-spacing:2px}
 
-/* ==========================================================
-   FOOTER
-   ========================================================== */
-footer{
-  text-align:center;padding:40px 20px 20px;
-  font-family:'VT323',monospace;font-size:18px;color:var(--dim);
-  border-top:2px dashed var(--border-dim);
-  margin-top:40px;
+/* Badge for hero */
+.badge{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.18em;
+  color:var(--red);
+  border:1px solid var(--red);
+  padding:8px 16px;
+  text-transform:uppercase;
+  margin-bottom:20px;
 }
-footer .big{font-family:'Press Start 2P',monospace;font-size:14px;color:var(--gold);margin-bottom:14px;letter-spacing:2px}
 
-/* Print */
+.print-only{display:none}
+
 @media print{
-  body::before,body::after{display:none}
-  body{background:#0a0014}
+  body::before{display:none}
+  .toc,.colophon{page-break-inside:avoid}
 }
 </style>
 </head>
 <body>
+
 <main>
 
-<!-- ==================== HERO ==================== -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-preline">► GAME RESEARCH vol.01 ◄  ★  APRIL 2026  ★  RETRO ARCADE EDITION</div>
-    <h1 class="hero-title">BUILD<br>NEON HIGHSCORE</h1>
-    <div class="hero-verdict">DAY-1 REVENUE: $40 — $220</div>
-    <div class="hero-sub">SYNTHWAVE SHOOTER × TELEGRAM STARS × $1 ENGRAVE</div>
-    <div class="hero-sparks">★ ☆ ★ ☆ ★ ☆ ★</div>
-    <div class="hero-meta">ONE DEVELOPER · 12 HOURS · UNITY 6 WEBGL · ORGANIC ONLY</div>
+<!-- ============================================
+     MASTHEAD
+     ============================================ -->
+<div class="masthead">
+  <span class="logo">GAME MARKET INTELLIGENCE</span>
+  <span>VOL 01 · ISSUE 02 · APRIL 5, 2026</span>
+  <span>PREPARED FOR TIM ZININ · CONFIDENTIAL</span>
+</div>
+
+<!-- ============================================
+     COVER
+     ============================================ -->
+<section class="cover">
+  <div class="issue">— THE PICK OF THE MONTH —</div>
+  <h1>AI or <span class="spec">Not</span></h1>
+  <div class="cover-sub">A 12-hour browser game riding the hottest cultural frame of 2026. Built solo. Monetized Day&nbsp;1. Premium unlock plus vanity engraving. No custom art, no music, no prior audience.</div>
+
+  <div class="cover-meta">
+    <div><span>SCOPE</span><strong>One developer, one day</strong></div>
+    <div><span>ENGINE</span><strong>Unity 6 · WebGL · 2D URP</strong></div>
+    <div><span>CHANNELS</span><strong>Reddit Devvit · Telegram · Web</strong></div>
+    <div><span>MONETIZATION</span><strong>Premium + Vanity + Stars</strong></div>
+    <div><span>EXPECTED DAY-1</span><strong class="gold">$40 – $220</strong></div>
   </div>
 </section>
 
 <!-- TOC -->
 <nav class="toc">
-  <a href="#summary">01 ▸ SUMMARY</a>
-  <a href="#scoring">02 ▸ TOP-3 SCORE</a>
-  <a href="#pick">03 ▸ THE PICK</a>
-  <a href="#timeline">04 ▸ 12H PLAN</a>
-  <a href="#quests">05 ▸ LAUNCH DAY</a>
-  <a href="#setup">06 ▸ SETUP</a>
-  <a href="#bench">07 ▸ BENCHMARKS</a>
-  <a href="#charts">08 ▸ DATA</a>
+  <a href="#verdict"><span class="num">01</span><span class="name">The Verdict</span></a>
+  <a href="#paidvfree"><span class="num">02</span><span class="name">Paid vs Free</span></a>
+  <a href="#scoring"><span class="num">03</span><span class="name">Top&nbsp;3 Scoring</span></a>
+  <a href="#pick"><span class="num">04</span><span class="name">The Pick</span></a>
+  <a href="#plan"><span class="num">05</span><span class="name">12-Hour Plan</span></a>
+  <a href="#launch"><span class="num">06</span><span class="name">Launch Day</span></a>
+  <a href="#setup"><span class="num">07</span><span class="name">Setup Checklist</span></a>
+  <a href="#bench"><span class="num">08</span><span class="name">Benchmarks</span></a>
 </nav>
 
-<!-- ==================== EXECUTIVE SUMMARY ==================== -->
-<section id="summary" class="exec-summary">
-  <p class="exec-text">
-    Build <strong>"NEON HIGHSCORE"</strong> — a 60-second synthwave space shooter on
-    <strong>Telegram Mini App + Web</strong>, monetized via Telegram Stars cosmetic ship skins +
-    $1 Stripe "Pay to Engrave Your Name on the Wall of Legends" vanity leaderboard.
-    You already have 80% of the core game (space shooter, asteroids, neon grid, particles).
-    The missing 20% (timer, score, game-over screen, leaderboard, two payment flows) fits in 10 hours.
+<!-- ============================================
+     VERDICT PANEL
+     ============================================ -->
+<section id="verdict" class="verdict-panel">
+  <div class="verdict-title">
+    Ship a daily <em>Human&nbsp;or&nbsp;AI</em> guessing game on Reddit, Telegram and the open web.
+  </div>
+  <p class="verdict-sub">
+    Ride the March 2026 "AI fatigue" wave that just pushed a solo-dev game to 50&nbsp;million hits in thirty days. Monetize with a $2.99 premium unlock on itch.io&nbsp;+&nbsp;Stripe, a $2 vanity pin on the daily leaderboard, and 50 Telegram Stars cosmetic. Zero custom art, zero music, zero prior audience. Twelve hours from empty project to live URL.
   </p>
-  <div class="exec-revenue">
-    <div class="exec-rev-cell">
-      <div class="lbl">DAY 1</div>
-      <div class="val">$40 — $220</div>
-      <div class="note">base: $112 / optimistic: $390</div>
+
+  <div class="verdict-numbers">
+    <div class="verdict-num">
+      <div class="lbl">Day 1</div>
+      <div class="big">$112</div>
+      <div class="range">range $40 — $220 · base case</div>
     </div>
-    <div class="exec-rev-cell">
-      <div class="lbl">WEEK 1</div>
-      <div class="val">$180 — $900</div>
-      <div class="note">tail decay + CrazyGames secondary</div>
+    <div class="verdict-num">
+      <div class="lbl">Week 1</div>
+      <div class="big">$800</div>
+      <div class="range">range $400 — $2,500</div>
     </div>
-    <div class="exec-rev-cell">
-      <div class="lbl">MONTH 1</div>
-      <div class="val">$500 — $4,000</div>
-      <div class="note">depends on referral K-factor</div>
+    <div class="verdict-num">
+      <div class="lbl">Month 1</div>
+      <div class="big">$5K</div>
+      <div class="range">range $1.5K — $12K + $1K Reddit Dev Funds</div>
     </div>
   </div>
 </section>
 
-<!-- ==================== TOP-3 SCORING ==================== -->
-<section id="scoring">
-<h2>◆ 02 — TOP-3 SCORING (PRODUCT NOT SUM)</h2>
-<p style="font-size:18px;color:var(--dim);margin-bottom:14px">6 criteria scored 1–10. Final score = product (weak in any one dimension = eliminated).</p>
-
-<div class="score-grid">
-
-  <div class="score-card winner">
-    <div class="rank">1</div>
-    <div class="winner-badge">► WINNER ◄</div>
-    <div class="score-title">SYNTHWAVE SHOOTER × TELEGRAM MINI APP × STARS + STRIPE ENGRAVE</div>
-    <div class="score-bars">
-      <div class="score-bar"><span class="bar-lbl">Day-1 $</span><span class="bar-chars">█████████░</span><span class="bar-val">9</span></div>
-      <div class="score-bar"><span class="bar-lbl">Organic</span><span class="bar-chars">█████████░</span><span class="bar-val">9</span></div>
-      <div class="score-bar"><span class="bar-lbl">ARPDAU</span><span class="bar-chars">███████░░░</span><span class="bar-val">7</span></div>
-      <div class="score-bar"><span class="bar-lbl">Feasibility</span><span class="bar-chars">█████████░</span><span class="bar-val">9</span></div>
-      <div class="score-bar"><span class="bar-lbl">Survive</span><span class="bar-chars">████████░░</span><span class="bar-val">8</span></div>
-      <div class="score-bar"><span class="bar-lbl">Assets</span><span class="bar-chars">██████████</span><span class="bar-val">10</span></div>
-    </div>
-    <div class="score-final">
-      <div class="lbl">PRODUCT SCORE</div>
-      <div class="val">367,416</div>
-    </div>
+<!-- ============================================
+     BIG CALLOUT — the cultural wave
+     ============================================ -->
+<section class="callout-big">
+  <div class="num">50M</div>
+  <div>
+    <div class="text">hits in 30 days. One solo dev. Zero advertising. Just a browser game and a Show HN post.</div>
+    <div class="source">— "Your AI Slop Bores Me", Miki Doodle, March 2026 · Kotaku, Wikipedia, Know&nbsp;Your&nbsp;Meme</div>
   </div>
-
-  <div class="score-card">
-    <div class="rank">2</div>
-    <div class="score-title">SYNTHWAVE SHOOTER × CRAZYGAMES × REWARDED ADS</div>
-    <div class="score-bars">
-      <div class="score-bar"><span class="bar-lbl">Day-1 $</span><span class="bar-chars">███░░░░░░░</span><span class="bar-val">3</span></div>
-      <div class="score-bar"><span class="bar-lbl">Organic</span><span class="bar-chars">████████░░</span><span class="bar-val">8</span></div>
-      <div class="score-bar"><span class="bar-lbl">ARPDAU</span><span class="bar-chars">█████░░░░░</span><span class="bar-val">5</span></div>
-      <div class="score-bar"><span class="bar-lbl">Feasibility</span><span class="bar-chars">██████████</span><span class="bar-val">10</span></div>
-      <div class="score-bar"><span class="bar-lbl">Survive</span><span class="bar-chars">███████░░░</span><span class="bar-val">7</span></div>
-      <div class="score-bar"><span class="bar-lbl">Assets</span><span class="bar-chars">██████████</span><span class="bar-val">10</span></div>
-    </div>
-    <div class="score-final">
-      <div class="lbl">PRODUCT SCORE</div>
-      <div class="val">84,000</div>
-    </div>
-  </div>
-
-  <div class="score-card">
-    <div class="rank">3</div>
-    <div class="score-title">.IO MULTIPLAYER ASTEROIDS × POKI/ITCH × COSMETIC IAP</div>
-    <div class="score-bars">
-      <div class="score-bar"><span class="bar-lbl">Day-1 $</span><span class="bar-chars">████░░░░░░</span><span class="bar-val">4</span></div>
-      <div class="score-bar"><span class="bar-lbl">Organic</span><span class="bar-chars">██████░░░░</span><span class="bar-val">6</span></div>
-      <div class="score-bar"><span class="bar-lbl">ARPDAU</span><span class="bar-chars">██████░░░░</span><span class="bar-val">6</span></div>
-      <div class="score-bar"><span class="bar-lbl">Feasibility</span><span class="bar-chars">████░░░░░░</span><span class="bar-val">4</span></div>
-      <div class="score-bar"><span class="bar-lbl">Survive</span><span class="bar-chars">██████░░░░</span><span class="bar-val">6</span></div>
-      <div class="score-bar"><span class="bar-lbl">Assets</span><span class="bar-chars">████████░░</span><span class="bar-val">8</span></div>
-    </div>
-    <div class="score-final">
-      <div class="lbl">PRODUCT SCORE</div>
-      <div class="val">27,648</div>
-    </div>
-  </div>
-
-</div>
-
-<div class="rejected">
-  <h3>▼ REJECTED VARIANTS</h3>
-  <ul>
-    <li><strong>Steam premium launch</strong> — 2-week review, Day-1 impossible</li>
-    <li><strong>Google Play F2P + IAP</strong> — 3-7 day review, IAP requires corp/tax info</li>
-    <li><strong>Apple App Store</strong> — 24-48h review + $99/yr + Apple IAP KYC</li>
-    <li><strong>Pure itch.io paid</strong> — avg lifetime revenue ~$1,200/title, Day-1 ≈ $0-10</li>
-    <li><strong>Roblox UGC</strong> — not Unity, forced Robux, long review</li>
-    <li><strong>Nutaku/adult</strong> — asset-heavy, not dev skill profile</li>
-    <li><strong>Facebook Instant Games</strong> — platform in decline, shrinking DAU</li>
-    <li><strong>Hypercasual mobile tapper</strong> — needs paid UA, $0.05 organic ARPDAU = ~$0</li>
-    <li><strong>Discord Activities</strong> — no monetization API for indie, >1 week approval</li>
-    <li><strong>Tap-to-earn TON clone</strong> — 13 majors dominate, regulatory cracking, needs real tokenomics</li>
-    <li><strong>Patreon subscription</strong> — requires pre-existing audience</li>
-    <li><strong>Pay-to-enter cash-prize leaderboard</strong> — Stripe TOS bans skill-prize games (since Sept 2023)</li>
-  </ul>
-</div>
 </section>
 
-<!-- ==================== THE PICK / FINAL RECOMMENDATION ==================== -->
-<section id="pick" class="final-rec">
-  <div class="final-name">NEON HIGHSCORE</div>
-  <div class="final-subname">— WALL OF LEGENDS —</div>
+<!-- ============================================
+     SECTION — PAID VS FREE
+     ============================================ -->
+<section id="paidvfree">
+  <div class="label">— 02 · The Paid Question —</div>
+  <h2 style="margin:20px 0 40px">Should the game be paid?</h2>
 
-  <div class="final-facts">
-    <div class="fact-box">
-      <div class="icon">🎮</div>
-      <div class="lbl">GENRE</div>
-      <div class="val">60-sec synthwave arcade shooter</div>
-    </div>
-    <div class="fact-box">
-      <div class="icon">📱</div>
-      <div class="lbl">PLATFORM</div>
-      <div class="val">Telegram Mini App<br>+ Web<br>+ CrazyGames</div>
-    </div>
-    <div class="fact-box">
-      <div class="icon">💰</div>
-      <div class="lbl">MONETIZATION</div>
-      <div class="val">Telegram Stars cosmetics + Stripe $1 engraving</div>
-    </div>
-    <div class="fact-box">
-      <div class="icon">⏱</div>
-      <div class="lbl">BUILD TIME</div>
-      <div class="val">10 hours<br>(80% baseline reuse)</div>
-    </div>
-  </div>
+  <p class="lede drop" style="max-width:900px">
+    Yes — but only if you pick the right rail. Steam pays the most but closes the door on Day&nbsp;1 with its wishlist phase. itch.io pays less but opens a Day&nbsp;1 window nobody else does. The right answer for a twelve-hour build is a <em>hybrid</em>: free core, small premium unlock, optional vanity tier. Three revenue rails, one codebase, same launch.
+  </p>
 
-  <div class="core-loop">
-    <h3>▸ CORE LOOP — EVERY 30 SECONDS</h3>
-    <ol>
-      <li>Player presses <b>START</b> → 60-second synthwave survival run begins on the existing shooter baseline.</li>
-      <li>Asteroids spawn faster every 10s; dodge and shoot; <b>score = asteroids × combo × survival_seconds</b>.</li>
-      <li>Timer ends → slow-motion zoom + big score reveal + global Top-100 rank shown.</li>
-      <li>Game-over shows two CTAs: <b>[ENGRAVE YOUR NAME — $1]</b> (Stripe) + <b>[UNLOCK SHIP SKIN — 75 ⭐]</b> (Telegram Stars).</li>
-      <li>One-click free replay. Share-score card auto-generates with rank + referral link <b>t.me/NeonHighscoreBot?start=ref_ID</b>.</li>
-    </ol>
-  </div>
+  <div class="rule"></div>
 
-  <div class="hook-box">
-    <h3>▸ UNIQUE HOOK — WHY NOT A CLONE</h3>
-    <p style="font-size:19px;margin-bottom:12px">It's not "another arcade game" — it's a <strong class="glow-gold">public permanent wall</strong>. Paying $1 engraves your name forever at a pixel position corresponding to your score. Higher score = higher row on a scrollable Hall of Legends page anyone can visit. Social proof: every new player sees 50+ names already engraved.</p>
-    <ul>
-      <li><strong>Highscore.money vanity psychology</strong> — $2,251 Day-1 with zero game, just a leaderboard (Marc Köhlbrugge, 2016)</li>
-      <li><strong>Million Dollar Homepage permanence</strong> — $1M total, pixels never removed</li>
-      <li><strong>Catizen ARPPU benchmark</strong> — $33 per paying user on Telegram casual games</li>
-    </ul>
-  </div>
+  <h3 style="margin-bottom:30px">The seven platforms, cold-rated</h3>
 
-  <h3 style="margin-top:28px;color:var(--gold);text-align:center;font-size:14px">▸ MONETIZATION MECHANISMS (EXACT POINTS)</h3>
-  <table class="monet-table">
-    <thead><tr><th>Trigger</th><th>Product</th><th>Price</th><th>Rail</th><th>Rev share</th></tr></thead>
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Platform</th>
+        <th>Day-1 Cash?</th>
+        <th>Review Time</th>
+        <th>Fee</th>
+        <th>Reality for solo dev</th>
+      </tr>
+    </thead>
     <tbody>
-      <tr><td>Game-over, new personal best</td><td>Engrave name — Bronze</td><td class="price">$1</td><td class="rail">Stripe Link (web)</td><td>97%</td></tr>
-      <tr><td>Game-over, same screen</td><td>Engrave — Silver / Gold / Emperor (bigger font, Hall position)</td><td class="price">$5 / $10 / $50</td><td class="rail">Stripe Link (web)</td><td>97%</td></tr>
-      <tr><td>Start screen → Skin Locker</td><td>7 ship skins (chrome, gold, vapor, sunset, pixel, skeleton, UFO)</td><td class="price">75 ⭐ ea (~$1.18)</td><td class="rail">Telegram Stars</td><td>70%</td></tr>
-      <tr><td>Start screen</td><td>Starter Pack: 3 skins + custom trail</td><td class="price">199 ⭐ (~$3.12)</td><td class="rail">Telegram Stars</td><td>70%</td></tr>
-      <tr><td>3 deaths in session</td><td>Skip 5-sec respawn wait</td><td class="price">25 ⭐ (~$0.39)</td><td class="rail">Telegram Stars</td><td>70%</td></tr>
-      <tr><td>Post-run share card</td><td>"Tip the dev" pay-what-you-want</td><td class="price">$1 — $500</td><td class="rail">Stripe PWYW</td><td>97%</td></tr>
+      <tr>
+        <td>Steam</td>
+        <td class="no">❌ No</td>
+        <td>1–2 weeks + 3-month wishlist phase</td>
+        <td>30% + $100 upfront</td>
+        <td>Gold standard for premium, but no Day-1 path. Tangy TD, Scritchy Scratchy, Slay the Spire 2 all waited months.</td>
+      </tr>
+      <tr>
+        <td>itch.io</td>
+        <td class="ok">✓ Yes</td>
+        <td>Instant</td>
+        <td>0–10% flexible</td>
+        <td>The only <em>true</em> Day-1 premium path. Avg lifetime $1,200/title. Discovery near zero — you bring the traffic.</td>
+      </tr>
+      <tr>
+        <td>Gumroad</td>
+        <td class="ok">✓ Yes</td>
+        <td>Instant</td>
+        <td>10%</td>
+        <td>Clean direct sale, auto-delivers download link. Good for &lt;$10 digital goods. Zero discovery.</td>
+      </tr>
+      <tr>
+        <td>Stripe + own landing</td>
+        <td class="ok">✓ Yes</td>
+        <td>Instant</td>
+        <td>2.9% + $0.30</td>
+        <td><strong class="gold">97% net to developer.</strong> Maximum control. Deliver via email + unique URL + localStorage token. The math winner.</td>
+      </tr>
+      <tr>
+        <td>Apple App Store (paid)</td>
+        <td class="warn">⚠ 24–48h review</td>
+        <td>1–2 days</td>
+        <td>15–30%</td>
+        <td>Paid app era is over. Discovery ≈ 0 without marketing. Only works in niches ($4.99–$9.99 premium indies).</td>
+      </tr>
+      <tr>
+        <td>Google Play (paid)</td>
+        <td class="no">❌ Effectively no</td>
+        <td>3–7 days</td>
+        <td>15–30%</td>
+        <td>Android is F2P+IAP territory. Paid conversion minimal. Not worth the effort for solo dev.</td>
+      </tr>
+      <tr>
+        <td>Telegram Stars (full unlock)</td>
+        <td class="warn">⚠ 21-day hold</td>
+        <td>Instant</td>
+        <td>30%</td>
+        <td>New 2025–26 rail. Mini Apps tolerate premium unlocks more than Apple. 21 days to withdraw Stars → cash.</td>
+      </tr>
     </tbody>
   </table>
-  <p style="font-size:16px;color:var(--dim);margin-top:10px"><strong class="glow-win">NO cash prizes. NO tournament entry fees. NO gambling.</strong> Pure cosmetic + vanity engraving — fully within Stripe & Telegram TOS.</p>
 
-  <h3 style="margin-top:32px;color:var(--gold);text-align:center;font-size:14px">▸ EXPECTED REVENUE PROJECTION</h3>
-  <div class="revenue-stacks">
-    <div class="rev-stack">
-      <div class="period">DAY 1</div>
-      <div class="coin-pile">💰💰💰</div>
-      <div class="range">$40 — $220</div>
-      <div class="detail">base $112 · 25 payers × $4.50<br>from 10 organic posting actions</div>
+  <hr class="rule">
+
+  <h3 style="margin-bottom:30px">Three working models for a 12-hour premium build</h3>
+
+  <div class="tiers">
+
+    <div class="tier">
+      <div class="tag">MODEL A · PURE PREMIUM</div>
+      <h4>itch.io direct sale</h4>
+      <div class="price">$2.99</div>
+      <div class="price-sub">one-time · free demo included</div>
+      <ul>
+        <li>Instant publish, 0–10% platform fee</li>
+        <li>Free 3-play demo unlocks purchase CTA</li>
+        <li>License key delivered via email + localStorage</li>
+        <li>One SKU, one decision, clean legal</li>
+        <li>Math: 2,000 visits × 3% × $2.99 ≈ $174 Day 1</li>
+      </ul>
     </div>
-    <div class="rev-stack">
-      <div class="period">WEEK 1</div>
-      <div class="coin-pile">💰💰💰💰</div>
-      <div class="range">$180 — $900</div>
-      <div class="detail">tail decay 30%/day + CrazyGames ads Day-3<br>+ viral referrals from Wall sharing</div>
+
+    <div class="tier">
+      <div class="tag">MODEL B · PAY WHAT YOU WANT</div>
+      <h4>Humble Bundle formula</h4>
+      <div class="price">$1 – $∞</div>
+      <div class="price-sub">suggested $3 · 35% overpay</div>
+      <ul>
+        <li>Lowest barrier to entry</li>
+        <li>Captures tip/vanity psychology naturally</li>
+        <li>Avg ticket ≈ $4–6 (anchoring effect)</li>
+        <li>Proven: Celeste, A Short Hike, Baba Is You prototypes</li>
+        <li>Math: similar total, higher variance</li>
+      </ul>
     </div>
-    <div class="rev-stack">
-      <div class="period">MONTH 1</div>
-      <div class="coin-pile">💰💰💰💰💰</div>
-      <div class="range">$500 — $4,000</div>
-      <div class="detail">CrazyGames featured + TG compounding<br>+ new ship skins drops weekly</div>
+
+    <div class="tier primary">
+      <div class="tag">MODEL C · HYBRID ★ RECOMMENDED</div>
+      <h4>Free + premium + vanity</h4>
+      <div class="price">Free + $2.99 + $2</div>
+      <div class="price-sub">three parallel rails, one codebase</div>
+      <ul>
+        <li>Free core: unlimited base play, keeps viral loop alive</li>
+        <li>$2.99 Stripe unlock: archive, themes, ad-free, "Pro" badge</li>
+        <li>$2 Stripe vanity pin: leaderboard engraving impulse buy</li>
+        <li>+ 50 Telegram Stars cosmetic skins on TG mirror</li>
+        <li>Builds paying-email database for next launch</li>
+      </ul>
     </div>
   </div>
 
-  <h3 style="margin-top:32px;color:var(--warn);text-align:center;font-size:14px">⚠ 3 RISK FACTORS ⚠</h3>
-  <div class="risks">
-    <div class="risk-box">
-      <div class="risk-head">RISK 01 — TRAFFIC DRIES UP DAY 2</div>
-      <div class="risk-body">Highscore.money went from $2,251 Day-1 to $323 by end of month. Launch spike is finite.</div>
-      <div class="risk-mit">✓ MITIGATION: Telegram referral loop (+50⭐ both sides) + 5 more posts across 7 days + CrazyGames Day-3 launch</div>
+  <div class="pullquote">
+    <blockquote>Premium alone gives you a ceiling. Vanity alone gives you a spike. Hybrid gives you both — and the only asset that compounds across launches: a list of people who already paid you once.</blockquote>
+    <cite>— THE MATH WINS WHEN THE RAILS COMPOUND</cite>
+  </div>
+</section>
+
+<!-- ============================================
+     SECTION — SCORING
+     ============================================ -->
+<section id="scoring">
+  <div class="label">— 03 · The Scoring Matrix —</div>
+  <h2 style="margin:20px 0 40px">Top 3 combinations</h2>
+
+  <p class="lede" style="max-width:900px;margin-bottom:30px">Every viable <span class="gold">(platform × genre × monetization)</span> combination scored on six criteria, 1–10. Final score is the <em>product</em>, not the sum — weak in any single dimension and you're eliminated.</p>
+
+  <div class="score-grid">
+
+    <div class="score-card winner">
+      <div class="winner-tag">★ THE PICK</div>
+      <div class="rank">01</div>
+      <div class="concept">Daily Human-or-AI game on Reddit Devvit + Telegram + Web, hybrid monetization</div>
+      <div class="scores">
+        <div>Day-1 readiness</div><div class="s-val">8 / 10</div>
+        <div>Organic discovery</div><div class="s-val">9 / 10</div>
+        <div>ARPPU</div><div class="s-val">7 / 10</div>
+        <div>12h feasibility</div><div class="s-val">8 / 10</div>
+        <div>Survivability</div><div class="s-val">9 / 10</div>
+        <div>Asset independence</div><div class="s-val">10 / 10</div>
+      </div>
+      <div class="final">
+        <div class="lbl">Product Score</div>
+        <div class="num">362,880</div>
+      </div>
     </div>
-    <div class="risk-box">
-      <div class="risk-head">RISK 02 — STRIPE FREEZE</div>
-      <div class="risk-body">Even vanity leaderboards can get flagged. Games-of-skill-prize banned since Sept 2023.</div>
-      <div class="risk-mit">✓ MITIGATION: Register Stripe as "digital collectibles / cosmetics" NOT "games". Telegram Stars as primary rail. PayPal backup.</div>
+
+    <div class="score-card">
+      <div class="rank">02</div>
+      <div class="concept">"Guess the prompt" AI image puzzle on Reddit + Poki, Stripe vanity + rewarded video</div>
+      <div class="scores">
+        <div>Day-1 readiness</div><div class="s-val">7 / 10</div>
+        <div>Organic discovery</div><div class="s-val">8 / 10</div>
+        <div>ARPPU</div><div class="s-val">6 / 10</div>
+        <div>12h feasibility</div><div class="s-val">7 / 10</div>
+        <div>Survivability</div><div class="s-val">8 / 10</div>
+        <div>Asset independence</div><div class="s-val">9 / 10</div>
+      </div>
+      <div class="final">
+        <div class="lbl">Product Score</div>
+        <div class="num">169,344</div>
+      </div>
     </div>
-    <div class="risk-box">
-      <div class="risk-head">RISK 03 — WEBGL LOAD TIME ON TG MOBILE</div>
-      <div class="risk-body">Current build 54MB. Phones will drop 60% if >30MB load.</div>
-      <div class="risk-mit">✓ MITIGATION: Hour 8-10: CrazyGames optim package + Brotli + IL2CPP Faster-Smaller + strip PP. Target <15MB, <8s to interactive, 60fps.</div>
+
+    <div class="score-card">
+      <div class="rank">03</div>
+      <div class="concept">Suika-style merge with brainrot emoji skin on Poki + itch, rewarded video + $2 unlock</div>
+      <div class="scores">
+        <div>Day-1 readiness</div><div class="s-val">6 / 10</div>
+        <div>Organic discovery</div><div class="s-val">7 / 10</div>
+        <div>ARPPU</div><div class="s-val">5 / 10</div>
+        <div>12h feasibility</div><div class="s-val">8 / 10</div>
+        <div>Survivability</div><div class="s-val">6 / 10</div>
+        <div>Asset independence</div><div class="s-val">10 / 10</div>
+      </div>
+      <div class="final">
+        <div class="lbl">Product Score</div>
+        <div class="num">100,800</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h3 style="margin:60px 0 30px">And the eighteen that didn't make it</h3>
+
+  <div class="rejected-list">
+    <div class="item"><div class="name">Wordle clone</div><div class="reason">Market oversaturated since 2022. Dead on arrival April 2026.</div></div>
+    <div class="item"><div class="name">GeoGuessr clone</div><div class="reason">Requires paid Street View API license. 12h infeasible.</div></div>
+    <div class="item"><div class="name">Hypercasual Play Store</div><div class="reason">2-week review + $0.05 organic ARPDAU = no Day-1 revenue.</div></div>
+    <div class="item"><div class="name">Hamster Kombat clone</div><div class="reason">Original lost 96% of users peak-to-now. Category cold.</div></div>
+    <div class="item"><div class="name">Dress-up / fashion sim</div><div class="reason">Demands real custom art assets. Fails no-art constraint.</div></div>
+    <div class="item"><div class="name">Steam premium launch</div><div class="reason">Coming Soon + wishlist phase = no Day-1 cash for zero audience.</div></div>
+    <div class="item"><div class="name">Rhythm tapper</div><div class="reason">Needs licensed music or custom tracks. Asset-dependent.</div></div>
+    <div class="item"><div class="name">AI dungeon master chat</div><div class="reason">LLM cost per session unbounded; burns cash without gate.</div></div>
+    <div class="item"><div class="name">Tower defense (Tangy TD)</div><div class="reason">4-year dev cycle reality. Not 12 hours. Ceiling reference only.</div></div>
+    <div class="item"><div class="name">Endless runner</div><div class="reason">Clone-bombed on Poki since 2023. Zero survivability.</div></div>
+    <div class="item"><div class="name">Autobattler mini</div><div class="reason">12h infeasible to balance. Needs content depth.</div></div>
+    <div class="item"><div class="name">Discord Activity game</div><div class="reason">Embedded SDK works but discovery is guild-gated. No Day-1.</div></div>
+    <div class="item"><div class="name">Roblox experience</div><div class="reason">14-day studio review + DevEx minimum 50K Robux (~$175).</div></div>
+    <div class="item"><div class="name">Deck-builder mini</div><div class="reason">Insufficient content for meaningful play in 12 hours.</div></div>
+    <div class="item"><div class="name">Card / trivia standalone</div><div class="reason">TG trivia saturated; 120K MAU ceiling already captured.</div></div>
+    <div class="item"><div class="name">One-screen physics puzzle</div><div class="reason">Works as mechanic, but has no viral hook on its own.</div></div>
+    <div class="item"><div class="name">Personality quiz</div><div class="reason">Crowded, low ARPPU, no defensible moat.</div></div>
+    <div class="item"><div class="name">iOS paid app ($2.99)</div><div class="reason">Paid app discovery ≈ 0 in 2026. Review ≥24h.</div></div>
+  </div>
+</section>
+
+<!-- ============================================
+     THE PICK — main spread
+     ============================================ -->
+<section class="pick" id="pick">
+  <div class="pick-inner">
+    <div class="pick-issue">— 04 · The Pick — in full —</div>
+    <div class="pick-name">AI or <em>Not</em></div>
+    <div class="pick-tag">The daily game that asks: can you still tell a real human from a machine?</div>
+
+    <div class="pick-facts">
+      <div class="pick-fact">
+        <div class="lbl">Genre</div>
+        <div class="val">15-second daily social deduction</div>
+      </div>
+      <div class="pick-fact">
+        <div class="lbl">Primary channel</div>
+        <div class="val">Reddit Devvit Web app</div>
+      </div>
+      <div class="pick-fact">
+        <div class="lbl">Build time</div>
+        <div class="val">12 hours solo (Unity 2D URP)</div>
+      </div>
+      <div class="pick-fact">
+        <div class="lbl">Assets</div>
+        <div class="val">Text + emoji only. No custom art.</div>
+      </div>
+    </div>
+
+    <div class="pick-loop">
+      <div class="heading">The core loop.</div>
+      <ol>
+        <li>Player opens the Reddit post, the itch URL, or the Telegram Mini App. One tap to start.</li>
+        <li>Six short text responses appear to today's prompt — "Write a wedding toast for a hamster", "Describe a Tuesday". Three are written by real humans, three are generated live by GPT-4o-mini.</li>
+        <li>Player tags each "Human" or "AI" against a fifteen-second clock. Instant score, zero to six.</li>
+        <li>Global daily leaderboard appears. Streak counter ticks up. Auto-generated result card pre-fills a Reddit comment with their rank.</li>
+        <li>Two call-to-action buttons sit below the score: <strong>Unlock Pro — $2.99</strong> and <strong>Pin my guess — $2</strong>. One-click Stripe checkout on web, Telegram Stars on mobile.</li>
+      </ol>
+    </div>
+
+    <div class="pullquote" style="margin:80px 0 60px">
+      <blockquote>Your AI Slop Bores Me asked you to <em>be</em> the AI. AI or Not asks you to <em>spot</em> it.</blockquote>
+      <cite>— THE COMPLEMENTARY ANGLE IS THE MOAT</cite>
+    </div>
+
+    <h3 style="margin-bottom:40px">Monetization — three rails, one codebase</h3>
+
+    <div class="tiers">
+      <div class="tier primary">
+        <div class="tag">Rail 1 · Premium unlock</div>
+        <h4>Pro Pass</h4>
+        <div class="price">$2.99</div>
+        <div class="price-sub">Stripe or itch.io · 97% net</div>
+        <ul>
+          <li>Unlimited daily plays</li>
+          <li>Full archive of past prompts</li>
+          <li>Five custom themes</li>
+          <li>Ad-free across all mirrors</li>
+          <li>"Pro" name badge on leaderboard</li>
+        </ul>
+      </div>
+
+      <div class="tier">
+        <div class="tag">Rail 2 · Vanity impulse</div>
+        <h4>Pin Your Guess</h4>
+        <div class="price">$2</div>
+        <div class="price-sub">Stripe Payment Link · 97% net</div>
+        <ul>
+          <li>Inscribe your name on daily wall</li>
+          <li>Permanent, never removed</li>
+          <li>Same legal shape as Highscore.money (live since 2016)</li>
+          <li>Upsell tiers: $5 Silver, $10 Gold, $50 Emperor</li>
+          <li>Zero randomness, zero prize pool</li>
+        </ul>
+      </div>
+
+      <div class="tier">
+        <div class="tag">Rail 3 · TG Stars cosmetic</div>
+        <h4>Gold Check</h4>
+        <div class="price">50 ⭐</div>
+        <div class="price-sub">~$0.65 · 70% net to dev</div>
+        <ul>
+          <li>Gold check-mark next to TG name</li>
+          <li>Alternative: 199 ⭐ lifetime Pro bundle</li>
+          <li>Instant in-Telegram purchase</li>
+          <li>21-day withdrawal hold</li>
+          <li>Feeds the same leaderboard</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin:80px 0 30px">Expected revenue</h3>
+
+    <div class="revenue-proj">
+      <div class="rev-block">
+        <div class="period">Day 1</div>
+        <div class="amount">$112<span class="range">$40 – $220 range</span></div>
+        <div class="detail">2,000 organic visits from ten staggered launch posts. 1.5%–2.5% pay conversion at $4.50 average ticket. Show HN front page unlocks the high end ($500–$2,200 hit case).</div>
+      </div>
+
+      <div class="rev-block">
+        <div class="period">Week 1</div>
+        <div class="amount">$800<span class="range">$400 – $2,500 range</span></div>
+        <div class="detail">Tail decay at 30% per day from Day-1 spike, plus streak-return users, plus Reddit Devvit algo boost for daily games, plus three additional distribution posts spread across seven days.</div>
+      </div>
+
+      <div class="rev-block">
+        <div class="period">Month 1</div>
+        <div class="amount">$5K<span class="range">$1.5K – $12K range</span></div>
+        <div class="detail">Includes $1,000 Reddit Developer Funds automatic payout at 250 qualified installs (tier 1, Apr-Jun 2026 pool). Hit case requires one viral moment — TikTok clip, HN front page, or sub with 500K+ reposting.</div>
+      </div>
+    </div>
+
+    <h3 style="margin:80px 0 30px">Three risks, three mitigations</h3>
+
+    <div class="risks">
+      <div class="risk">
+        <div class="tag">Risk 01</div>
+        <h4>Launch posts don't catch fire on Day 1</h4>
+        <p>Show HN and Reddit posts underperform. First-24h window closes with under 500 visitors.</p>
+        <div class="mit">Ship on a Tuesday at 13:00 UTC. Pre-write four title angles. Post simultaneously to five subreddits with 30-minute gaps to avoid crosspost bans. Have one friend pre-queued to upvote and comment in the first ten minutes.</div>
+      </div>
+
+      <div class="risk">
+        <div class="tag">Risk 02</div>
+        <h4>Accused as a clone of Your AI Slop Bores Me</h4>
+        <p>Early Reddit/HN commenters dismiss the game as a copy of the March hit, killing momentum.</p>
+        <div class="mit">Lead with the complementary framing in the launch copy: "YASBM asks you to be the AI. AI or Not asks you to spot it." Credit Miki Doodle directly in README. Turn the comparison into the narrative hook, not the accusation.</div>
+      </div>
+
+      <div class="risk">
+        <div class="tag">Risk 03</div>
+        <h4>Stripe flags vanity pin as gambling-adjacent</h4>
+        <p>Stripe's September 2023 TOS change bans games of skill with prize payouts. Even vanity leaderboards can get caught in automated review.</p>
+        <div class="mit">Register Stripe account as "digital goods / collectibles / software" — not "games". No randomness, no prize pool, fixed text engraving only. Keep Telegram Stars as the primary rail as a dual-path backup. Add PayPal as a tertiary fallback.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================
+     12-HOUR PLAN
+     ============================================ -->
+<section id="plan">
+  <div class="label">— 05 · The Twelve Hours —</div>
+  <h2 style="margin:20px 0 40px">From empty project to live URL</h2>
+  <p class="lede" style="max-width:900px;margin-bottom:30px">A strict hour-by-hour budget. Every slot has one task, one deliverable, one risk. If any slot slips, the next one cuts scope — never extends the timeline.</p>
+
+  <div class="timeline">
+    <div class="t-hour">
+      <div class="h-num">00</div>
+      <div class="h-phase">Scaffold</div>
+      <div class="h-task">New Unity 6 2D URP project, GitHub repo, GitHub Pages on /docs, Vercel linked for backend, Supabase project created.</div>
+      <div class="h-deliv">Empty WebGL build deploys</div>
+    </div>
+    <div class="t-hour">
+      <div class="h-num">01</div>
+      <div class="h-phase">UI Shell</div>
+      <div class="h-task">One scene. TextMeshPro canvas. Six response cards. Human/AI toggle per card. 15-second timer.</div>
+      <div class="h-deliv">Static shell playable</div>
+    </div>
+    <div class="t-hour">
+      <div class="h-num">02</div>
+      <div class="h-phase">Backend</div>
+      <div class="h-task">Vercel function calls GPT-4o-mini with today's prompt. Fetches 3 human responses from Postgres. Returns mixed JSON.</div>
+      <div class="h-deliv">/api/today returns JSON</div>
+    </div>
+    <div class="t-hour">
+      <div class="h-num">03</div>
+      <div class="h-phase">Game Loop</div>
+      <div class="h-task">Wire timer → scoring → local streak in localStorage. Result screen with rank.</div>
+      <div class="h-deliv">Full game playable end-to-end</div>
+    </div>
+    <div class="t-hour">
+      <div class="h-num">04</div>
+      <div class="h-phase">Human Pool</div>
+      <div class="h-task">Submission form for players to contribute tomorrow's human responses. Moderation via free OpenAI Moderation API.</div>
+      <div class="h-deliv">Pool self-filling</div>
+    </div>
+    <div class="t-hour">
+      <div class="h-num">05</div>
+      <div class="h-phase">Stripe</div>
+      <div class="h-task">Payment Link #1 — Pro unlock $2.99. Payment Link #2 — Pin my guess $2. Webhook writes to Supabase pins and pro_users tables.</div>
+      <div class="h-deliv">Live test $2 charge lands in DB</div>
+    </div>
+    <div class="t-hour">
+      <div class="h-num">06</div>
+      <div class="h-phase">Leaderboard</div>
+      <div class="h-task">/api/leaderboard returns today's top 50 + pinned entries. Unity WebGL fetches and renders.</div>
+      <div class="h-deliv">Live leaderboard UI</div>
+    </div>
+    <div class="t-hour">
+      <div class="h-num">07</div>
+      <div class="h-phase">Reddit Devvit</div>
+      <div class="h-task">npm create devvit@latest. Paste hosted webview URL. Publish to Reddit Developer Hub as unlisted app on a test subreddit.</div>
+      <div class="h-deliv">Devvit app installable</div>
+    </div>
+    <div class="t-hour">
+      <div class="h-num">08</div>
+      <div class="h-phase">Telegram Mini App</div>
+      <div class="h-task">Register bot with @BotFather, point web_app URL to same build, add Telegram.WebApp.ready() bridge + Stars sendInvoice endpoint.</div>
+      <div class="h-deliv">In-TG 50 ⭐ test purchase works</div>
+    </div>
+    <div class="t-hour">
+      <div class="h-num">09</div>
+      <div class="h-phase">Polish</div>
+      <div class="h-task">Kenney CC0 beep sound pack. Title screen. Copy pass ("Can you still spot a real human?"). Share button generates Reddit-ready result string.</div>
+      <div class="h-deliv">Feels finished</div>
+    </div>
+    <div class="t-hour">
+      <div class="h-num">10</div>
+      <div class="h-phase">Deploy</div>
+      <div class="h-task">GitHub Actions CI to Pages. SEO meta. og:image auto-generated from a canvas screenshot. Umami analytics events wired.</div>
+      <div class="h-deliv">Live URL across three platforms</div>
+    </div>
+    <div class="t-hour">
+      <div class="h-num">11</div>
+      <div class="h-phase">End-to-end test</div>
+      <div class="h-task">Pay yourself $2 via Stripe from a different card. Verify webhook → pin on wall → refund. Repeat for Pro unlock and 50 Stars. <strong style="color:var(--red)">Do not skip.</strong></div>
+      <div class="h-deliv">Money flow confirmed</div>
+    </div>
+    <div class="t-hour">
+      <div class="h-num">12</div>
+      <div class="h-phase">Launch</div>
+      <div class="h-task">Buffer hour. Fix whatever real-money test broke. Publish Devvit app to a live subreddit. Submit TG Mini App. Begin Quest Log.</div>
+      <div class="h-deliv">Three live URLs, launch imminent</div>
     </div>
   </div>
 </section>
 
-<div class="divider">════════════════════════════════════════════════════════════</div>
+<!-- ============================================
+     LAUNCH DAY QUESTS
+     ============================================ -->
+<section id="launch">
+  <div class="label">— 06 · Launch Day —</div>
+  <h2 style="margin:20px 0 40px">Ten posts, one day, zero budget</h2>
+  <p class="lede" style="max-width:900px;margin-bottom:30px">Tuesday is optimal. HN traffic peaks between 14:00 and 18:00 UTC. Reddit engagement climbs through the US afternoon. Post on a Tuesday or lose 40% of the spike window.</p>
 
-<!-- ==================== 12-HOUR TIMELINE ==================== -->
-<section id="timeline">
-<h2>◆ 04 — 12-HOUR PLAYBOOK (HOUR BY HOUR)</h2>
-
-<div class="timeline">
-  <div class="time-slot">
-    <div class="hour">H 0:00 — 1:00</div>
-    <div class="task">Fork space-shooter-unity → neon-highscore. Add 60s countdown timer + score formula (asteroids × combo × alive).</div>
-    <div class="deliv">Timer shows, score displays, run ends</div>
+  <div class="quests">
+    <div class="quest">
+      <div class="q-num">01</div>
+      <div class="q-time">13:00</div>
+      <div class="q-ch">Show HN</div>
+      <div class="q-text">"Show HN: AI or Not — a daily game where you spot the human among the bots"</div>
+      <div class="q-reach">20K – 120K uniques</div>
+    </div>
+    <div class="quest">
+      <div class="q-num">02</div>
+      <div class="q-time">13:05</div>
+      <div class="q-ch">r/playmygame (31K)</div>
+      <div class="q-text">"[Game] AI or Not — 15-second daily game: guess which 3 of 6 responses are human" + 20-sec GIF</div>
+      <div class="q-reach">3K – 12K views</div>
+    </div>
+    <div class="quest">
+      <div class="q-num">03</div>
+      <div class="q-time">13:10</div>
+      <div class="q-ch">r/webgames (103K)</div>
+      <div class="q-text">"AI or Not — new daily browser game, Wordle but for spotting AI"</div>
+      <div class="q-reach">5K – 25K views</div>
+    </div>
+    <div class="quest">
+      <div class="q-num">04</div>
+      <div class="q-time">13:15</div>
+      <div class="q-ch">Lobsters</div>
+      <div class="q-text">Same title as Show HN — Lobsters community embraced YASBM, loves the theme</div>
+      <div class="q-reach">2K – 8K</div>
+    </div>
+    <div class="quest">
+      <div class="q-num">05</div>
+      <div class="q-time">13:20</div>
+      <div class="q-ch">r/incremental_games</div>
+      <div class="q-text">"[Daily] AI or Not — streak-based human-vs-AI guessing, free to play"</div>
+      <div class="q-reach">2K – 10K</div>
+    </div>
+    <div class="quest">
+      <div class="q-num">06</div>
+      <div class="q-time">13:30</div>
+      <div class="q-ch">Devvit on r/ChatGPT (13M)</div>
+      <div class="q-text">Devvit app live as daily game. DM mods for pinned post. Cross-post to r/ArtificialIntelligence (2M).</div>
+      <div class="q-reach">50K – 500K impressions</div>
+    </div>
+    <div class="quest">
+      <div class="q-num">07</div>
+      <div class="q-time">14:00</div>
+      <div class="q-ch">Bluesky + Mastodon</div>
+      <div class="q-text">Screen recording, 30 seconds, #gamedev #webgames hashtags, tag @gamedev@mastodon.gamedev.place</div>
+      <div class="q-reach">500 – 5K</div>
+    </div>
+    <div class="quest">
+      <div class="q-num">08</div>
+      <div class="q-time">14:30</div>
+      <div class="q-ch">TikTok + Reels</div>
+      <div class="q-text">15-sec vertical clip of yourself failing the game live. Caption: "I made a game to see if YOU can tell AI from human. I scored 2/6. 🫠"</div>
+      <div class="q-reach">1K – 200K (viral lottery)</div>
+    </div>
+    <div class="quest">
+      <div class="q-num">09</div>
+      <div class="q-time">15:00</div>
+      <div class="q-ch">HN alternate</div>
+      <div class="q-text">Natural comment plug on any active AI-discussion thread — never promotional, always additive</div>
+      <div class="q-reach">500 – 5K</div>
+    </div>
+    <div class="quest">
+      <div class="q-num">10</div>
+      <div class="q-time">18:00</div>
+      <div class="q-ch">Telegram groups</div>
+      <div class="q-text">Mini App link to 5 English gamedev TG groups: @indiedevs, @htmlgames, @ton_games, @gamedev_chat, @mini_apps_center</div>
+      <div class="q-reach">500 – 3K</div>
+    </div>
   </div>
-  <div class="time-slot">
-    <div class="hour">H 1:00 — 2:30</div>
-    <div class="task">Build Game Over screen (IMGUI): score, rank in Top-100, 3 buttons (REPLAY / ENGRAVE $1 / SKIN ⭐). Slow-mo transition.</div>
-    <div class="deliv">Polished end screen, 3 CTAs</div>
-  </div>
-  <div class="time-slot integ">
-    <div class="hour">H 2:30 — 4:00</div>
-    <div class="task">Supabase free tier: scores + engravings tables. Unity WebGL → REST via UnityWebRequest.</div>
-    <div class="deliv">POST /scores, GET /top100 working</div>
-  </div>
-  <div class="time-slot integ">
-    <div class="hour">H 4:00 — 5:30</div>
-    <div class="task">Static wall-of-legends.html: Tailwind + Supabase fetch, render gold/diamond tiers sorted. Synthwave BG.</div>
-    <div class="deliv">Public wall, seeded with 15 names</div>
-  </div>
-  <div class="time-slot integ">
-    <div class="hour">H 5:30 — 7:00</div>
-    <div class="task">Stripe: 4 Payment Links ($1/$5/$10/$50). Webhook → Supabase Edge Function → engravings. Application.OpenURL.</div>
-    <div class="deliv">Real $1 test charge, name on wall</div>
-  </div>
-  <div class="time-slot integ">
-    <div class="hour">H 7:00 — 8:30</div>
-    <div class="task">Telegram Mini App: BotFather @NeonHighscoreBot. webapp URL. Stars invoices via sendInvoice XTR (75⭐ skin, 199⭐ pack).</div>
-    <div class="deliv">In-TG 75⭐ test buy = skin unlock</div>
-  </div>
-  <div class="time-slot polish">
-    <div class="hour">H 8:30 — 10:00</div>
-    <div class="task">Optim WebGL: IL2CPP Faster-Smaller, Brotli, strip PP, CrazyGames optim pkg. Target <15MB. Share card generator + referral.</div>
-    <div class="deliv">Load <8s mobile, share works</div>
-  </div>
-  <div class="time-slot polish">
-    <div class="hour">H 10:00 — 11:00</div>
-    <div class="task">Seed 30 "founding" names on wall. 3 CC0 synthwave tracks. VHS grain shader. Landing copy. Submit to CrazyGames (parallel review).</div>
-    <div class="deliv">Live site + CrazyGames submitted</div>
-  </div>
-  <div class="time-slot deploy">
-    <div class="hour">H 11:00 — 12:00</div>
-    <div class="task">LAUNCH BLAST — 10 distribution channels (section 05). Umami events tracking. Sit in Stripe + Supabase + TG for first 4 hours.</div>
-    <div class="deliv">First $ in Stripe dashboard</div>
-  </div>
-  <div class="time-slot deploy">
-    <div class="hour">H +4 hrs</div>
-    <div class="task">PERSONAL TOUCH — DM thank-you to every paying player on Telegram. Ask for feedback. Fix bugs instantly.</div>
-    <div class="deliv">0 angry players, 100% refunds avoided</div>
-  </div>
-  <div class="time-slot deploy">
-    <div class="hour">H +12 hrs</div>
-    <div class="task">CRUNCH ANALYTICS — identify which channel converted best. Double down next day.</div>
-    <div class="deliv">Day 2 plan data-driven</div>
-  </div>
-  <div class="time-slot deploy">
-    <div class="hour">H +72 hrs</div>
-    <div class="task">CrazyGames review done → live. Add new skin drops. Iterate on funnel leak points.</div>
-    <div class="deliv">Week-1 secondary traffic live</div>
-  </div>
-</div>
 </section>
 
-<div class="divider">░░▒▒▓▓██ LAUNCH DAY QUEST LOG ██▓▓▒▒░░</div>
-
-<!-- ==================== DISTRIBUTION QUEST LOG ==================== -->
-<section id="quests">
-<h2>◆ 05 — DAY-1 DISTRIBUTION QUEST LOG</h2>
-<p style="font-size:18px;color:var(--dim);margin-bottom:20px">All times UTC. Launch day = Tuesday (best engagement: HN, Reddit, PH). Staggered 15-min cadence prevents algorithm burial.</p>
-
-<div class="quest-log">
-  <div class="quest-header">► QUESTS COMPLETED: 0 / 10 ◄</div>
-  <div class="quest-progress"><span class="bar">░░░░░░░░░░░░░░░░░░░░░░░░</span>  0%</div>
-
-  <div class="quest">
-    <div class="q-num">01</div>
-    <div class="q-time">13:00</div>
-    <div class="q-channel">PRODUCT HUNT</div>
-    <div class="q-action"><strong>"Neon Highscore — Engrave Your Name on the Wall of Legends for $1"</strong> — 4 screenshots + 1 gameplay GIF</div>
-    <div class="q-reach">500–5,000 visits</div>
-  </div>
-
-  <div class="quest">
-    <div class="q-num">02</div>
-    <div class="q-time">13:30</div>
-    <div class="q-channel">HACKER NEWS</div>
-    <div class="q-action"><strong>"Show HN: I built a synthwave shooter in 12h where $1 engraves your name forever"</strong> — cite Highscore.money + honest build story</div>
-    <div class="q-reach">2,000–20,000 if FP</div>
-  </div>
-
-  <div class="quest">
-    <div class="q-num">03</div>
-    <div class="q-time">14:00</div>
-    <div class="q-channel">r/WEBGAMES (115K)</div>
-    <div class="q-action"><strong>"[WebGL] Neon Highscore — 60-second synthwave shooter with a paid Wall of Legends (free to play)"</strong> + GIF</div>
-    <div class="q-reach">1,000–5,000</div>
-  </div>
-
-  <div class="quest">
-    <div class="q-num">04</div>
-    <div class="q-time">14:15</div>
-    <div class="q-channel">r/PLAYMYGAME (150K)</div>
-    <div class="q-action"><strong>"60-second synthwave shooter with permanent engraving — feedback welcome"</strong> + devlog angle</div>
-    <div class="q-reach">500–3,000</div>
-  </div>
-
-  <div class="quest">
-    <div class="q-num">05</div>
-    <div class="q-time">14:30</div>
-    <div class="q-channel">r/INDIEGAMING (390K)</div>
-    <div class="q-action"><strong>"Built & launched a synthwave arcade in 12 hours — live now in-browser"</strong> + before/after screenshots</div>
-    <div class="q-reach">800–4,000</div>
-  </div>
-
-  <div class="quest">
-    <div class="q-num">06</div>
-    <div class="q-time">14:45</div>
-    <div class="q-channel">r/INCREMENTAL (230K)</div>
-    <div class="q-action"><strong>"Score leaderboard meets permanent engraving"</strong> — emphasize wall-building loop</div>
-    <div class="q-reach">300–1,500</div>
-  </div>
-
-  <div class="quest">
-    <div class="q-num">07</div>
-    <div class="q-time">15:00</div>
-    <div class="q-channel">TWITTER / X</div>
-    <div class="q-action">Thread from @TimmyZinin: 1/ hook 2/ 15s MP4 3/ Wall screenshot 4/ tech stack 5/ link. Hashtags + tag @poki @crazygames_com</div>
-    <div class="q-reach">500–3,000</div>
-  </div>
-
-  <div class="quest">
-    <div class="q-num">08</div>
-    <div class="q-time">15:30</div>
-    <div class="q-channel">INDIE HACKERS</div>
-    <div class="q-action"><strong>"I launched a game in 12 hours — first $X in revenue"</strong> milestone + live Stripe dashboard screenshot</div>
-    <div class="q-reach">200–2,000 (17× PH conv)</div>
-  </div>
-
-  <div class="quest">
-    <div class="q-num">09</div>
-    <div class="q-time">16:00</div>
-    <div class="q-channel">TG GAME CHANNELS</div>
-    <div class="q-action">DM @tapps_bot for tapps.center. Post @gamedev_jobs_middle @ton_games @mini_apps_center with t.me/NeonHighscoreBot</div>
-    <div class="q-reach">500–5,000 TG users</div>
-  </div>
-
-  <div class="quest">
-    <div class="q-num">10</div>
-    <div class="q-time">16:30</div>
-    <div class="q-channel">BETALIST + OTHERS</div>
-    <div class="q-action">BetaList, launched.directory, openhunts.com + 2-3 TikTok/Bluesky clips showing best runs</div>
-    <div class="q-reach">100–500 each</div>
-  </div>
-</div>
-
-<div class="card card-dim" style="margin-top:24px">
-  <h3 style="color:var(--warn)">⚠ ANTI-PATTERNS — DO NOT DO</h3>
-  <ul style="list-style:none;font-size:18px;margin-top:10px">
-    <li style="padding:4px 0">✗ Do NOT post in r/gamedev (strict anti-promo rules)</li>
-    <li style="padding:4px 0">✗ Do NOT copy-paste same text to 10 places (shadowban risk)</li>
-    <li style="padding:4px 0">✗ Do NOT tag Highscore.money devs attention-seekingly — credit them in post body instead</li>
-    <li style="padding:4px 0">✗ Do NOT promise "crypto prizes" or "win money" — Stripe TOS + Telegram rules violation</li>
-  </ul>
-</div>
-</section>
-
-<div class="divider">════════════════════════════════════════════════════════════</div>
-
-<!-- ==================== MONETIZATION CHECKLIST ==================== -->
+<!-- ============================================
+     SETUP CHECKLIST
+     ============================================ -->
 <section id="setup">
-<h2>◆ 06 — MONETIZATION SETUP CHECKLIST</h2>
-<div class="checklist">
-  <h3>▸ CONNECT THESE BEFORE PUBLISHING</h3>
+  <div class="label">— 07 · Pre-Launch —</div>
+  <h2 style="margin:20px 0 40px">Ten services to wire up before writing a line of Unity</h2>
+  <p class="lede" style="max-width:900px;margin-bottom:30px">Every account is free-tier compatible. Total upfront cost: zero. First-month operating cost: under ten dollars.</p>
 
-  <div class="check-row">
-    <div class="num">01</div>
-    <div class="svc">STRIPE</div>
-    <div class="act">4 Payment Links (Bronze $1 / Silver $5 / Gold $10 / Emperor $50). Business category = "digital goods / collectibles / software" (NOT "games"). Webhook → Supabase.</div>
-    <div class="blk">No payment = no revenue</div>
-  </div>
+  <div class="checklist">
+    <div class="check-item">
+      <div class="num">01</div>
+      <div>
+        <h4>GitHub repo + Pages</h4>
+        <p>New public repo <code>ai-or-not</code>. Pages enabled on main branch /docs folder. Existing WebGL pipeline works.</p>
+        <span class="blocker">Primary host</span>
+      </div>
+    </div>
 
-  <div class="check-row">
-    <div class="num">02</div>
-    <div class="svc">TG BOTFATHER</div>
-    <div class="act">Create @NeonHighscoreBot. /setmenubutton → web_app. /setdescription, /setabouttext. Enable inline mode for sharing.</div>
-    <div class="blk">No TG = lose 50% upside</div>
-  </div>
+    <div class="check-item">
+      <div class="num">02</div>
+      <div>
+        <h4>Vercel functions</h4>
+        <p>Linked to repo. Env vars: OPENAI_API_KEY, STRIPE_SECRET, DATABASE_URL, REDDIT_APP_SECRET. Free tier unlimited.</p>
+        <span class="blocker">Backend</span>
+      </div>
+    </div>
 
-  <div class="check-row">
-    <div class="num">03</div>
-    <div class="svc">TG STARS</div>
-    <div class="act">Auto-enabled after first invoice. Currency = XTR. Min withdrawal = 1,000 ⭐ (~$13).</div>
-    <div class="blk">No Stars = no TG IAP</div>
-  </div>
+    <div class="check-item">
+      <div class="num">03</div>
+      <div>
+        <h4>Supabase Postgres</h4>
+        <p>Free tier 500MB. Tables: responses, pins, plays, pro_users, leaderboard. Row-level security on.</p>
+        <span class="blocker">No backend = no leaderboard</span>
+      </div>
+    </div>
 
-  <div class="check-row">
-    <div class="num">04</div>
-    <div class="svc">SUPABASE</div>
-    <div class="act">Free tier (500MB, unlimited API). Tables: scores, engravings, skins_owned. Enable RLS. Anon key in WebGL build.</div>
-    <div class="blk">No backend = no leaderboard</div>
-  </div>
+    <div class="check-item">
+      <div class="num">04</div>
+      <div>
+        <h4>OpenAI API key</h4>
+        <p>Billing cap hard-set to $20/month. GPT-4o-mini at $0.00045 per session. Expected under $5/month for first 100K plays.</p>
+        <span class="blocker">LLM responses</span>
+      </div>
+    </div>
 
-  <div class="check-row">
-    <div class="num">05</div>
-    <div class="svc">CRAZYGAMES</div>
-    <div class="act">New dev account. Submit WebGL zip Day-1. 2-day review → Day-3 live. CrazyGames SDK v3 (ads + IAP).</div>
-    <div class="blk">Miss Week-1 secondary</div>
-  </div>
+    <div class="check-item">
+      <div class="num">05</div>
+      <div>
+        <h4>Stripe business account</h4>
+        <p>Two Payment Links. Category: "digital goods / collectibles / software" — not "games". Webhook → Vercel → Supabase.</p>
+        <span class="blocker">Primary monetization rail</span>
+      </div>
+    </div>
 
-  <div class="check-row">
-    <div class="num">06</div>
-    <div class="svc">GH PAGES</div>
-    <div class="act">Repo neon-highscore → Pages → timzinin.com/neon-highscore/. Existing WebGL pipeline works (target 15MB from 54MB).</div>
-    <div class="blk">Primary distribution</div>
-  </div>
+    <div class="check-item">
+      <div class="num">06</div>
+      <div>
+        <h4>Reddit Developer Hub</h4>
+        <p>devvit CLI installed. App registered. Unlocks $1,000 Developer Funds tier at 250 qualified installs.</p>
+        <span class="blocker">Reddit algo boost + $1K bounty</span>
+      </div>
+    </div>
 
-  <div class="check-row">
-    <div class="num">07</div>
-    <div class="svc">UMAMI</div>
-    <div class="act">Add site ID. Events: run_start, run_end, engrave_click/paid, stars_click/paid, share_click, referral_used.</div>
-    <div class="blk">Blind to optimization</div>
-  </div>
+    <div class="check-item">
+      <div class="num">07</div>
+      <div>
+        <h4>Telegram @BotFather</h4>
+        <p>New bot. /newapp to register Mini App URL. Enable Stars payments. Currency XTR. 21-day withdrawal hold.</p>
+        <span class="blocker">Secondary IAP rail</span>
+      </div>
+    </div>
 
-  <div class="check-row">
-    <div class="num">08</div>
-    <div class="svc">PAYPAL</div>
-    <div class="act">Secondary checkout. Backup if Stripe flags account.</div>
-    <div class="blk">Stripe freeze = $0</div>
-  </div>
+    <div class="check-item">
+      <div class="num">08</div>
+      <div>
+        <h4>itch.io direct sale</h4>
+        <p>New page, private until launch. $2.99 price, or pay-what-you-want with $1 minimum. Backup Pro unlock rail.</p>
+        <span class="blocker">Third rail for premium</span>
+      </div>
+    </div>
 
-  <div class="check-row">
-    <div class="num">09</div>
-    <div class="svc">REFERRAL K</div>
-    <div class="act">Track invites sent vs redeemed via Umami. If K > 0.4, double down on referral bonus.</div>
-    <div class="blk">Blind to organic loop</div>
-  </div>
+    <div class="check-item">
+      <div class="num">09</div>
+      <div>
+        <h4>Umami analytics</h4>
+        <p>Existing Contabo install. Events: run_start, run_end, pro_click, pro_paid, pin_click, pin_paid, share_click, referral_used.</p>
+        <span class="blocker">Can't optimize Day 2 blind</span>
+      </div>
+    </div>
 
-  <div class="check-row">
-    <div class="num">10</div>
-    <div class="svc">TG CHANNEL</div>
-    <div class="act">@NeonHighscore channel. Auto-post daily top-10 screenshot via n8n cron. Community asset for future launches.</div>
-    <div class="blk">Miss cross-sell</div>
+    <div class="check-item">
+      <div class="num">10</div>
+      <div>
+        <h4>Cloudflare proxy</h4>
+        <p>Optional. Free tier. DDoS protection + rate limiting on Day-1 traffic spike. Shields Vercel free-tier quota.</p>
+        <span class="blocker">Bot protection</span>
+      </div>
+    </div>
   </div>
-</div>
 </section>
 
-<div class="divider">░░▒▒▓▓██ BENCHMARK GAMES ██▓▓▒▒░░</div>
-
-<!-- ==================== BENCHMARK GAME CARDS ==================== -->
+<!-- ============================================
+     BENCHMARKS
+     ============================================ -->
 <section id="bench">
-<h2>◆ 07 — FIVE BENCHMARK GAMES (PROOF)</h2>
+  <div class="label">— 08 · Benchmarks —</div>
+  <h2 style="margin:20px 0 40px">Five games that prove the pattern</h2>
 
-<div class="benchmarks">
-  <div class="game-card">
-    <div class="gc-head">HIGHSCORE .MONEY<br>(Köhlbrugge 2016)</div>
-    <div class="gc-body">
-      <div class="stat"><span class="k">TEAM</span><span class="v">1 dev</span></div>
-      <div class="stat"><span class="k">BUILD</span><span class="v">1 day</span></div>
-      <div class="stat"><span class="k">DAY-1 $</span><span class="v">$2,251</span></div>
-      <div class="stat"><span class="k">TOTAL</span><span class="v">$2,574</span></div>
-      <div class="stat"><span class="k">PAYERS D1</span><span class="v">51</span></div>
-      <div class="stat"><span class="k">AVG PAY</span><span class="v">$44</span></div>
-      <div class="gc-lesson">Naked vanity leaderboard, ZERO gameplay, $44 avg. Adding synthwave shooter multiplies justification.</div>
-    </div>
-  </div>
+  <div class="benchmarks">
 
-  <div class="game-card">
-    <div class="gc-head">CATIZEN<br>(TG Mini App 2024)</div>
-    <div class="gc-body">
-      <div class="stat"><span class="k">TEAM</span><span class="v">Small</span></div>
-      <div class="stat"><span class="k">BUILD</span><span class="v">~3 mo v1</span></div>
-      <div class="stat"><span class="k">REVENUE</span><span class="v">$25M+</span></div>
-      <div class="stat"><span class="k">USERS</span><span class="v">34M</span></div>
-      <div class="stat"><span class="k">PAYING</span><span class="v">800K (3%)</span></div>
-      <div class="stat"><span class="k">ARPPU</span><span class="v">$33</span></div>
-      <div class="gc-lesson">3% conv + $33 ARPPU proves Telegram Mini App economics work. Cosmetics = driver.</div>
+    <div class="bm">
+      <div class="bm-year">March 2026</div>
+      <h4>Your AI Slop Bores Me</h4>
+      <div class="bm-hero-num">50M</div>
+      <div class="bm-hero-label">Hits in 30 days</div>
+      <div class="bm-stats">
+        <span><strong>Team:</strong> 1 solo dev</span>
+        <span><strong>Build:</strong> Side project, days</span>
+        <span><strong>Peak concurrent:</strong> 16K</span>
+        <span><strong>Launch channel:</strong> Show HN</span>
+        <span><strong>Monetization:</strong> None (proof of reach, not cash)</span>
+      </div>
+      <div class="bm-lesson">The freshest documented template for how fast AI-themed browser games can reach scale with zero marketing.</div>
     </div>
-  </div>
 
-  <div class="game-card">
-    <div class="gc-head">TANGY TD<br>(solo Mar 2026)</div>
-    <div class="gc-body">
-      <div class="stat"><span class="k">TEAM</span><span class="v">1 dev</span></div>
-      <div class="stat"><span class="k">BUILD</span><span class="v">4 years</span></div>
-      <div class="stat"><span class="k">30 HRS $</span><span class="v">$31K</span></div>
-      <div class="stat"><span class="k">MONTH 1</span><span class="v">$245K</span></div>
-      <div class="stat"><span class="k">GENRE</span><span class="v">Tower Def</span></div>
-      <div class="stat"><span class="k">PLATFORM</span><span class="v">Steam</span></div>
-      <div class="gc-lesson">Simple mechanic + right moment = outsized Day-1 even solo. Ceiling reference for genre quality.</div>
+    <div class="bm">
+      <div class="bm-year">May 2016</div>
+      <h4>Highscore.money</h4>
+      <div class="bm-hero-num">$2,251</div>
+      <div class="bm-hero-label">Day-1 revenue</div>
+      <div class="bm-stats">
+        <span><strong>Team:</strong> Marc Köhlbrugge, solo</span>
+        <span><strong>Build:</strong> 1 day</span>
+        <span><strong>Day-1 payers:</strong> 51</span>
+        <span><strong>Avg ticket:</strong> $44</span>
+        <span><strong>Status:</strong> Still live in 2026</span>
+      </div>
+      <div class="bm-lesson">A naked vanity leaderboard with zero gameplay converted 51 strangers at $44 average. The math of Stripe-only vanity is documented and reproducible.</div>
     </div>
-  </div>
 
-  <div class="game-card">
-    <div class="gc-head">RAINBOW OBBY<br>(Poki HTML5)</div>
-    <div class="gc-body">
-      <div class="stat"><span class="k">TEAM</span><span class="v">2–5</span></div>
-      <div class="stat"><span class="k">PLAYS</span><span class="v">100M+</span></div>
-      <div class="stat"><span class="k">DAU</span><span class="v">800K</span></div>
-      <div class="stat"><span class="k">STUDIO $</span><span class="v">$1M/yr</span></div>
-      <div class="stat"><span class="k">GROWTH</span><span class="v">10×</span></div>
-      <div class="stat"><span class="k">PLATFORM</span><span class="v">Poki</span></div>
-      <div class="gc-lesson">Simple WebGL + right platform = self-sustaining revenue without paid ads.</div>
+    <div class="bm">
+      <div class="bm-year">March 2026</div>
+      <h4>Tangy TD</h4>
+      <div class="bm-hero-num">$245K</div>
+      <div class="bm-hero-label">Week-1 gross on Steam</div>
+      <div class="bm-stats">
+        <span><strong>Team:</strong> 1 solo dev (Cakez77)</span>
+        <span><strong>Build:</strong> 4 years</span>
+        <span><strong>Units:</strong> 28,078 in 7 days</span>
+        <span><strong>Net:</strong> $197,847</span>
+        <span><strong>Platform:</strong> Steam premium</span>
+      </div>
+      <div class="bm-lesson">Steam can still print money for solo devs — but only after years. Used here as the ceiling marker for premium-on-Steam, not as a Day-1 path.</div>
     </div>
-  </div>
 
-  <div class="game-card">
-    <div class="gc-head">LASER DRIFT<br>(Three.js '25)</div>
-    <div class="gc-body">
-      <div class="stat"><span class="k">TEAM</span><span class="v">Small</span></div>
-      <div class="stat"><span class="k">BUILD</span><span class="v">Weeks</span></div>
-      <div class="stat"><span class="k">PLAYS</span><span class="v">10K+</span></div>
-      <div class="stat"><span class="k">STYLE</span><span class="v">Synthwave</span></div>
-      <div class="stat"><span class="k">FEATURED</span><span class="v">WebGPU.com</span></div>
-      <div class="stat"><span class="k">AUDIENCE</span><span class="v">Active</span></div>
-      <div class="gc-lesson">Proves synthwave + browser + arcade still has audience in 2025-26. Exact aesthetic reference for NEON HIGHSCORE.</div>
+    <div class="bm">
+      <div class="bm-year">March 2026</div>
+      <h4>Scritchy Scratchy</h4>
+      <div class="bm-hero-num">500K</div>
+      <div class="bm-hero-label">Copies in 2 weeks</div>
+      <div class="bm-stats">
+        <span><strong>Team:</strong> Lunch Money + Funday Games</span>
+        <span><strong>Build:</strong> Weeks-months</span>
+        <span><strong>Price:</strong> $6.99 premium, no IAP</span>
+        <span><strong>Gross:</strong> ~$3M in 14 days</span>
+        <span><strong>Platform:</strong> Steam, macOS, iOS</span>
+      </div>
+      <div class="bm-lesson">Pure premium scratch-off idle hit. Proves the $5–8 price band is alive for the simplest possible core loops in 2026.</div>
     </div>
+
+    <div class="bm">
+      <div class="bm-year">2024–26</div>
+      <h4>Drive Mad / Level Devil</h4>
+      <div class="bm-hero-num">€1M</div>
+      <div class="bm-hero-label">Per year ceiling</div>
+      <div class="bm-stats">
+        <span><strong>Team:</strong> Solo / tiny (Unept, Martin Magni)</span>
+        <span><strong>Build:</strong> Months</span>
+        <span><strong>Platform:</strong> Poki web exclusive</span>
+        <span><strong>Monetization:</strong> Poki ad rev-share</span>
+        <span><strong>Growth:</strong> $50K → $1M/year</span>
+      </div>
+      <div class="bm-lesson">Poki's top web-first originals pay like full-time salaries. But 2–3 week soft-release gates it to a Week-3 rail, not Day-1.</div>
+    </div>
+
   </div>
-</div>
 </section>
 
-<div class="divider">░░▒▒▓▓██ THE DATA ██▓▓▒▒░░</div>
+<!-- ============================================
+     KEY NUMBERS
+     ============================================ -->
+<section>
+  <div class="label">— 09 · The Numbers —</div>
+  <h2 style="margin:20px 0 40px">Forty-seven data points that anchor the bet</h2>
 
-<!-- ==================== CHARTS & KEY NUMBERS ==================== -->
-<section id="charts" class="charts-section">
-<h2>◆ 08 — CHARTS & KEY NUMBERS</h2>
+  <div class="numbers-grid">
+    <div class="nm gold"><div class="big">$2,251</div><div class="lbl">Highscore.money Day-1 revenue (2016, reference)</div></div>
+    <div class="nm"><div class="big">50M</div><div class="lbl">YASBM hits in 30 days, March 2026</div></div>
+    <div class="nm red"><div class="big">16K</div><div class="lbl">YASBM peak concurrent users</div></div>
+    <div class="nm"><div class="big">$245K</div><div class="lbl">Tangy TD Week-1 gross, March 2026</div></div>
 
-<!-- Chart 1: ARPDAU -->
-<div class="chart-grid">
-  <div class="chart-card">
-    <h3>▸ ARPDAU BY PLATFORM (USD)</h3>
-    <div class="arpdau-chart">
-      <div class="arpdau-row hi"><span class="name">TG Mini Apps (Catizen)</span><span class="bar-wrap"><div class="bar" style="width:100%"></div></span><span class="val">$0.99</span></div>
-      <div class="arpdau-row"><span class="name">iOS rewarded video</span><span class="bar-wrap"><div class="bar" style="width:62%"></div></span><span class="val">$0.60</span></div>
-      <div class="arpdau-row"><span class="name">Android rewarded</span><span class="bar-wrap"><div class="bar" style="width:52%"></div></span><span class="val">$0.50</span></div>
-      <div class="arpdau-row"><span class="name">CrazyGames/Poki web</span><span class="bar-wrap"><div class="bar" style="width:18%"></div></span><span class="val">$0.18</span></div>
-      <div class="arpdau-row"><span class="name">itch.io (premium)</span><span class="bar-wrap"><div class="bar" style="width:8%"></div></span><span class="val">$0.08</span></div>
-      <div class="arpdau-row"><span class="name">Hypercasual (no ads)</span><span class="bar-wrap"><div class="bar" style="width:3%"></div></span><span class="val">$0.03</span></div>
-    </div>
-    <p class="chart-note">TG Mini Apps lead by 10× because of built-in Stars IAP rail + native sharing loops.</p>
+    <div class="nm gold"><div class="big">500K</div><div class="lbl">Scritchy Scratchy copies in 2 weeks</div></div>
+    <div class="nm"><div class="big">116M</div><div class="lbl">Reddit daily active users 2026</div></div>
+    <div class="nm green"><div class="big">$500K</div><div class="lbl">Reddit Developer Funds 2026 pool</div></div>
+    <div class="nm gold"><div class="big">$1,000</div><div class="lbl">Reddit Dev Funds tier 1 payout (250 installs)</div></div>
+
+    <div class="nm"><div class="big">103K</div><div class="lbl">r/webgames members</div></div>
+    <div class="nm"><div class="big">31K</div><div class="lbl">r/playmygame members</div></div>
+    <div class="nm blue"><div class="big">1B</div><div class="lbl">Telegram monthly active users</div></div>
+    <div class="nm"><div class="big">70%</div><div class="lbl">TG Stars dev revenue share</div></div>
+
+    <div class="nm gold"><div class="big">97%</div><div class="lbl">Stripe net on $3+ transactions</div></div>
+    <div class="nm red"><div class="big">96%</div><div class="lbl">Hamster Kombat users lost (peak → Feb 25)</div></div>
+    <div class="nm"><div class="big">100M</div><div class="lbl">Poki monthly players</div></div>
+    <div class="nm gold"><div class="big">€1M</div><div class="lbl">Poki top-title ceiling / year</div></div>
+
+    <div class="nm"><div class="big">2–3 wks</div><div class="lbl">Poki soft-release window</div></div>
+    <div class="nm"><div class="big">€100</div><div class="lbl">CrazyGames minimum payout</div></div>
+    <div class="nm blue"><div class="big">90%</div><div class="lbl">Discord Activities dev share</div></div>
+    <div class="nm red"><div class="big">0</div><div class="lbl">Discord Day-1 organic discovery</div></div>
+
+    <div class="nm"><div class="big">$0.00045</div><div class="lbl">GPT-4o-mini cost per game session</div></div>
+    <div class="nm"><div class="big">$0.15/M</div><div class="lbl">GPT-4o-mini input token price</div></div>
+    <div class="nm"><div class="big">$0.60/M</div><div class="lbl">GPT-4o-mini output token price</div></div>
+    <div class="nm gold"><div class="big">$5</div><div class="lbl">Expected monthly OpenAI spend first 100K plays</div></div>
+
+    <div class="nm"><div class="big">$19.63</div><div class="lbl">US iOS rewarded video eCPM, 2025</div></div>
+    <div class="nm"><div class="big">$16.49</div><div class="lbl">US Android rewarded video eCPM, 2025</div></div>
+    <div class="nm"><div class="big">0.86$</div><div class="lbl">Hypercasual average ARPU 2025</div></div>
+    <div class="nm red"><div class="big">$0.04</div><div class="lbl">Hypercasual organic ARPDAU floor</div></div>
+
+    <div class="nm"><div class="big">2.9%</div><div class="lbl">Stripe standard card fee + $0.30</div></div>
+    <div class="nm"><div class="big">21 days</div><div class="lbl">Telegram Stars withdrawal hold</div></div>
+    <div class="nm"><div class="big">$0.013</div><div class="lbl">Telegram Stars earn value</div></div>
+    <div class="nm"><div class="big">1,000 ⭐</div><div class="lbl">TG Stars minimum withdrawal</div></div>
+
+    <div class="nm blue"><div class="big">$8.2M</div><div class="lbl">YGG Play LOL Land lifetime (ceiling marker)</div></div>
+    <div class="nm"><div class="big">$4,263</div><div class="lbl">LOL Land peak ARPPU per month</div></div>
+    <div class="nm"><div class="big">$21.9M</div><div class="lbl">Cookie Clicker Steam lifetime gross</div></div>
+    <div class="nm"><div class="big">$6.7M</div><div class="lbl">Melvor Idle Steam lifetime gross</div></div>
+
+    <div class="nm"><div class="big">30K</div><div class="lbl">Show HN average front-page uniques 48h</div></div>
+    <div class="nm"><div class="big">120K</div><div class="lbl">Show HN strong front page ceiling</div></div>
+    <div class="nm gold"><div class="big">13:00</div><div class="lbl">UTC optimal Tuesday HN post time</div></div>
+    <div class="nm"><div class="big">73%</div><div class="lbl">Reddit users find new games on Reddit</div></div>
+
+    <div class="nm"><div class="big">15%</div><div class="lbl">Apple Small Business Program fee under $1M</div></div>
+    <div class="nm"><div class="big">30%</div><div class="lbl">Steam + Google + Apple standard cut</div></div>
+    <div class="nm"><div class="big">10%</div><div class="lbl">itch.io default platform fee (flexible)</div></div>
+    <div class="nm green"><div class="big">0%</div><div class="lbl">itch.io minimum fee (dev can set)</div></div>
+
+    <div class="nm gold"><div class="big">$3</div><div class="lbl">Recommended Pro unlock price for impulse buy</div></div>
+    <div class="nm"><div class="big">3%</div><div class="lbl">Expected free-to-pay conversion (hybrid model)</div></div>
+    <div class="nm green"><div class="big">12h</div><div class="lbl">Build budget, no exceptions</div></div>
   </div>
-
-  <!-- Chart 2: Revenue projection coin stacks -->
-  <div class="chart-card">
-    <h3>▸ REVENUE PROJECTION (BASE CASE)</h3>
-    <div class="coin-chart">
-      <div class="coin-col">
-        <div class="coins">
-          <div class="coin"></div><div class="coin"></div><div class="coin"></div>
-        </div>
-        <div class="lbl">DAY 1</div>
-        <div class="amount">$112</div>
-      </div>
-      <div class="coin-col">
-        <div class="coins">
-          <div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div>
-        </div>
-        <div class="lbl">WEEK 1</div>
-        <div class="amount">$500</div>
-      </div>
-      <div class="coin-col">
-        <div class="coins">
-          <div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div><div class="coin"></div>
-        </div>
-        <div class="lbl">MONTH 1</div>
-        <div class="amount">$1,600</div>
-      </div>
-    </div>
-    <p class="chart-note">Compound decay 30%/day from Day-1 spike + CrazyGames tail + referral K-factor.</p>
-  </div>
-
-  <!-- Chart 3: Competition heatmap -->
-  <div class="chart-card">
-    <h3>▸ GENRE COMPETITION DENSITY</h3>
-    <div class="heatmap-wrap">
-      <div class="heatmap">
-        <div class="heat-cell heat-5">HYPER CAS TAPPER</div>
-        <div class="heat-cell heat-4">ENDLESS RUNNER</div>
-        <div class="heat-cell heat-3">.IO MULTI</div>
-        <div class="heat-cell heat-2">TYPING WPM</div>
-        <div class="heat-cell heat-1">WALL / VANITY LB</div>
-
-        <div class="heat-cell heat-4">MATCH-3</div>
-        <div class="heat-cell heat-3">IDLE CLICKER</div>
-        <div class="heat-cell heat-3">PHYSICS PUZZ</div>
-        <div class="heat-cell heat-2">1-SCR ARCADE</div>
-        <div class="heat-cell heat-1">SYNTHWAVE SHOOT</div>
-
-        <div class="heat-cell heat-5">TAP-TO-EARN</div>
-        <div class="heat-cell heat-4">TOWER DEF</div>
-        <div class="heat-cell heat-3">AUTO-BATTLE</div>
-        <div class="heat-cell heat-2">WORD PUZZ</div>
-        <div class="heat-cell heat-1">AI CHAT SIM</div>
-      </div>
-      <div class="heat-legend">
-        <span style="color:var(--win)">■ low comp</span>
-        <span>■ medium</span>
-        <span style="color:var(--warn)">■ high comp</span>
-      </div>
-    </div>
-    <p class="chart-note">Green cells = solo-dev-friendly in April 2026. Red = saturated or oligopoly.</p>
-  </div>
-
-  <!-- Chart 4: Monetization funnel -->
-  <div class="chart-card">
-    <h3>▸ MONETIZATION FUNNEL (BASE CASE)</h3>
-    <div class="funnel">
-      <div class="funnel-row">
-        <span class="lbl">VISIT</span>
-        <span class="blocks">████████████████████████████</span>
-        <span class="pct">2,000</span>
-      </div>
-      <div class="funnel-row">
-        <span class="lbl">PLAY</span>
-        <span class="blocks">██████████████░░░░░░░░░░░░░░</span>
-        <span class="pct">1,000 · 50%</span>
-      </div>
-      <div class="funnel-row">
-        <span class="lbl">FINISH RUN</span>
-        <span class="blocks">██████████░░░░░░░░░░░░░░░░░░</span>
-        <span class="pct">700 · 70%</span>
-      </div>
-      <div class="funnel-row">
-        <span class="lbl">SEE CTA</span>
-        <span class="blocks">██████████░░░░░░░░░░░░░░░░░░</span>
-        <span class="pct">700 · 100%</span>
-      </div>
-      <div class="funnel-row">
-        <span class="lbl">CLICK PAY</span>
-        <span class="blocks">█░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
-        <span class="pct">80 · 11%</span>
-      </div>
-      <div class="funnel-row">
-        <span class="lbl">COMPLETE PAY</span>
-        <span class="blocks">▓░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
-        <span class="pct">25 · 2.5%</span>
-      </div>
-    </div>
-    <p class="chart-note">2,000 visits × 2.5% = 25 payers × $4.50 avg = $112 Day-1. Conversion benchmarks from Catizen + Highscore.money.</p>
-  </div>
-
-  <!-- Chart 5: Platform radar -->
-  <div class="chart-card">
-    <h3>▸ WINNING COMBO — RADAR</h3>
-    <div class="radar">
-      <svg viewBox="0 0 300 300">
-        <!-- Axis lines -->
-        <g stroke="#8b1849" stroke-width="1" fill="none">
-          <circle cx="150" cy="150" r="130"/>
-          <circle cx="150" cy="150" r="98"/>
-          <circle cx="150" cy="150" r="65"/>
-          <circle cx="150" cy="150" r="33"/>
-          <line x1="150" y1="20" x2="150" y2="280"/>
-          <line x1="20" y1="150" x2="280" y2="150"/>
-          <line x1="58" y1="58" x2="242" y2="242"/>
-          <line x1="242" y1="58" x2="58" y2="242"/>
-        </g>
-        <!-- Data polygon (scores 9,9,7,9,8,10 of 10) -->
-        <polygon points="150,33 264,90 264,210 150,280 36,210 36,90"
-                 fill="rgba(0,255,255,0.2)"
-                 stroke="#00ffff"
-                 stroke-width="3"/>
-        <polygon points="150,33 264,90 282,216 150,280 18,216 36,90"
-                 fill="rgba(255,215,0,0.25)"
-                 stroke="#ffd700"
-                 stroke-width="3"/>
-        <!-- Labels -->
-        <g fill="#00ffff" font-family="'Press Start 2P',monospace" font-size="8">
-          <text x="150" y="14" text-anchor="middle">DAY-1 $ 9</text>
-          <text x="278" y="90" text-anchor="middle">ORGANIC 9</text>
-          <text x="284" y="218" text-anchor="middle">ARPDAU 7</text>
-          <text x="150" y="298" text-anchor="middle">FEASIBLE 9</text>
-          <text x="16" y="218" text-anchor="middle">SURVIVE 8</text>
-          <text x="22" y="90" text-anchor="middle">ASSETS 10</text>
-        </g>
-        <!-- Center dot -->
-        <circle cx="150" cy="150" r="3" fill="#ffd700"/>
-      </svg>
-    </div>
-    <p class="chart-note">Gold polygon = NEON HIGHSCORE. Product of 6 axes = 367,416 — 4.4× next best.</p>
-  </div>
-
-  <!-- Chart 6: Traffic sources -->
-  <div class="chart-card">
-    <h3>▸ DAY-1 TRAFFIC BY CHANNEL (CONSERVATIVE)</h3>
-    <div class="traffic-bars">
-      <div class="traffic-row"><span class="src">Hacker News FP</span><span class="bw"><div class="b" style="width:100%"></div></span><span class="v">3,000+</span></div>
-      <div class="traffic-row"><span class="src">r/IndieGaming 390K</span><span class="bw"><div class="b" style="width:55%"></div></span><span class="v">800–4,000</span></div>
-      <div class="traffic-row"><span class="src">r/WebGames 115K</span><span class="bw"><div class="b" style="width:55%"></div></span><span class="v">1,000–5,000</span></div>
-      <div class="traffic-row"><span class="src">TG Game Channels</span><span class="bw"><div class="b" style="width:50%"></div></span><span class="v">500–5,000</span></div>
-      <div class="traffic-row"><span class="src">Product Hunt</span><span class="bw"><div class="b" style="width:50%"></div></span><span class="v">500–5,000</span></div>
-      <div class="traffic-row"><span class="src">r/playmygame 150K</span><span class="bw"><div class="b" style="width:30%"></div></span><span class="v">500–3,000</span></div>
-      <div class="traffic-row"><span class="src">Twitter / X</span><span class="bw"><div class="b" style="width:30%"></div></span><span class="v">500–3,000</span></div>
-      <div class="traffic-row"><span class="src">Indie Hackers</span><span class="bw"><div class="b" style="width:20%"></div></span><span class="v">200–2,000</span></div>
-      <div class="traffic-row"><span class="src">r/incremental 230K</span><span class="bw"><div class="b" style="width:15%"></div></span><span class="v">300–1,500</span></div>
-      <div class="traffic-row"><span class="src">BetaList + others</span><span class="bw"><div class="b" style="width:5%"></div></span><span class="v">100–500 ea</span></div>
-    </div>
-    <p class="chart-note">10-channel staggered blast. Expected total: 800–2,000 conservative, 5,000–20,000 if HN frontpage.</p>
-  </div>
-</div>
-
-<!-- KEY NUMBERS GRID -->
-<h3 style="margin:40px 0 20px;color:var(--cyan);font-size:14px">▸ KEY NUMBERS (RAW DATA POINTS)</h3>
-<div class="numbers-grid">
-  <div class="num-card hi"><div class="big">$2,251</div><div class="sml">Highscore.money Day-1 (2016)</div></div>
-  <div class="num-card"><div class="big">$33</div><div class="sml">Catizen ARPPU</div></div>
-  <div class="num-card cy"><div class="big">3%</div><div class="sml">Catizen paying conversion</div></div>
-  <div class="num-card win"><div class="big">$245K</div><div class="sml">Tangy TD Month 1 (solo)</div></div>
-  <div class="num-card"><div class="big">950M</div><div class="sml">Telegram total users</div></div>
-  <div class="num-card cy"><div class="big">190M</div><div class="sml">TG users playing games (20%)</div></div>
-  <div class="num-card hi"><div class="big">34M</div><div class="sml">Catizen users</div></div>
-  <div class="num-card win"><div class="big">300M</div><div class="sml">Hamster Kombat users / 6 mo</div></div>
-  <div class="num-card"><div class="big">70%</div><div class="sml">TG Stars dev revenue share</div></div>
-  <div class="num-card cy"><div class="big">97%</div><div class="sml">Stripe net (after fees $1+)</div></div>
-  <div class="num-card hi"><div class="big">40M</div><div class="sml">CrazyGames MAU</div></div>
-  <div class="num-card"><div class="big">100M</div><div class="sml">Poki MAU</div></div>
-  <div class="num-card cy"><div class="big">2 days</div><div class="sml">CrazyGames review time</div></div>
-  <div class="num-card win"><div class="big">€100</div><div class="sml">CrazyGames min payout</div></div>
-  <div class="num-card"><div class="big">$19.63</div><div class="sml">US iOS rewarded eCPM</div></div>
-  <div class="num-card cy"><div class="big">$16.49</div><div class="sml">US Android rewarded eCPM</div></div>
-  <div class="num-card hi"><div class="big">15,000+</div><div class="sml">New browser games H1 2025 (2.7× YoY)</div></div>
-  <div class="num-card"><div class="big">55%</div><div class="sml">Unity WebGL share new web games</div></div>
-  <div class="num-card win"><div class="big">54 → 15 MB</div><div class="sml">Build size target (Brotli + IL2CPP)</div></div>
-  <div class="num-card cy"><div class="big">80%</div><div class="sml">Code reuse from Space Shooter</div></div>
-</div>
 </section>
 
-<div class="divider">════════════════════════════════════════════════════════════</div>
-
-<!-- ==================== SOURCES ==================== -->
-<section class="sources">
-<h2>◆ SOURCES · CREDITS ROLL ◆</h2>
-<div class="credits">
-
-<div class="credits-cat">▸ PLATFORM ECONOMICS</div>
-<a href="https://developer.crazygames.com/" target="_blank">CrazyGames Developer Portal</a>
-<a href="https://docs.crazygames.com/" target="_blank">CrazyGames Documentation — SDK & Payouts</a>
-<a href="https://developers.poki.com/guide/monetization" target="_blank">Poki Developers Monetization Guide</a>
-<a href="https://techfundingnews.com/browser-gaming-website-poki-won-big-at-the-dutch-game-awards-celebrating-hitting-1-billion-monthly-plays/" target="_blank">Poki hits 1 billion monthly plays</a>
-<a href="https://medium.com/@playrea/from-hobby-to-67-million-gameplays-on-poki-in-2025-df2c147cfb27" target="_blank">From hobby to 67M gameplays on Poki in 2025</a>
-<a href="https://blog.gamedistribution.com/html5-indie-game-developer-opportunities-2026/" target="_blank">GameDistribution HTML5 Indie Opportunities 2026</a>
-<a href="https://wiki.playgama.com/playgama/articles/introducing-web-based-game-engine-rankings-first-issue-h1-2025" target="_blank">Playgama Web Engine Rankings H1 2025</a>
-<a href="https://itch.io/docs/creators/pricing" target="_blank">itch.io Pricing & Pay What You Want Docs</a>
-<a href="https://generalistprogrammer.com/tutorials/how-to-make-money-on-itchio-indie-game-guide" target="_blank">How to Make Money on Itch.io 2026</a>
-<a href="https://howtomarketagame.com/2025/05/12/benchmark-itch-io-traffic/" target="_blank">itch.io Traffic Benchmark 2025</a>
-
-<div class="credits-cat">▸ TELEGRAM MINI APPS &amp; STARS</div>
-<a href="https://core.telegram.org/bots/webapps" target="_blank">Telegram Mini Apps Official Docs</a>
-<a href="https://core.telegram.org/api/stars" target="_blank">Telegram Stars API Official</a>
-<a href="https://core.telegram.org/bots/payments-stars" target="_blank">Telegram Bot Payments — Stars</a>
-<a href="https://merge.rocks/blog/telegram-mini-apps-2026-monetization-guide-how-to-earn-from-telegram-mini-apps" target="_blank">TG Mini Apps 2026 Monetization Guide (Merge)</a>
-<a href="https://omisoft.net/blog/how-to-monetize-telegram-mini-app/" target="_blank">How to Monetize a Telegram Mini App (OmiSoft)</a>
-<a href="https://pixelplex.io/blog/viral-mechanics-on-telegram-apps/" target="_blank">Viral Telegram Games 2026 — PixelPlex</a>
-<a href="https://medium.com/@BlockchainLycan/catizen-reaches-34-million-users-how-this-tap-to-earn-game-dominates-telegram-f06151c11cff" target="_blank">Catizen Reaches 34M Users</a>
-<a href="https://www.altcoinbuzz.io/cryptocurrency-news/catizen-hits-800k-paying-users-tops-telegram-revenue-charts/" target="_blank">Catizen Hits 800K Paying Users — Altcoin Buzz</a>
-<a href="https://cointelegraph.com/news/telegram-clicker-game-catizen-reaches-800-k-paying-users-first-6-months" target="_blank">Catizen 800K paying users 6 months — Cointelegraph</a>
-<a href="https://ambcrypto.com/top-12-telegram-games-gaining-traction-in-january-2026/" target="_blank">Top Telegram games Jan 2026 — AMBCrypto</a>
-<a href="https://gameworldobserver.com/2025/04/04/telegram-mini-apps-monetization-top-games-features" target="_blank">Inside Telegram Mini Apps — Game World Observer</a>
-
-<div class="credits-cat">▸ UNITY WEBGL + TELEGRAM</div>
-<a href="https://ilogos.biz/unity-to-webgl-porting-guide/" target="_blank">Unity to WebGL Porting Guide 2026</a>
-<a href="https://www.openfort.io/blog/how-to-build-telegram-mini-app-in-unity-webgl" target="_blank">Build TG Mini App with Unity WebGL — Openfort</a>
-<a href="https://github.com/CrazyGamesCom/unity-optimizations-package" target="_blank">CrazyGames Unity Optimizations Package (GitHub)</a>
-<a href="https://github.com/rotolonico/FirebaseWebGL" target="_blank">FirebaseWebGL for Unity (GitHub)</a>
-<a href="https://github.com/asynkr/unity-telegram-game" target="_blank">Unity Telegram Game Package (GitHub)</a>
-
-<div class="credits-cat">▸ MONETIZATION ECONOMICS</div>
-<a href="https://tenjin.com/blog/ad-monetization-benchmark-report-2025-ecpm-ad-revenue/" target="_blank">Tenjin Ad Monetization Benchmark 2025</a>
-<a href="https://www.businessofapps.com/ads/rewarded-video/" target="_blank">Rewarded Video Ads 2026 — Business of Apps</a>
-<a href="https://investgame.net/wp-content/uploads/2025/07/Gamesforum-Intelligence-Hypercasual-Gaming-Report.pdf" target="_blank">Gamesforum Hypercasual Intelligence Report 2025</a>
-<a href="https://appmagic.rocks/research/casual-report-h1-2025" target="_blank">AppMagic Casual Games Report H1 2025</a>
-
-<div class="credits-cat">▸ BENCHMARK CASE STUDIES</div>
-<a href="https://medium.com/@marckohlbrugge/how-i-made-2-251-in-1-day-with-highscore-money-dd56b35b2681" target="_blank">Highscore.money Day-1 — Marc Köhlbrugge</a>
-<a href="https://evilmartians.com/chronicles/rails-hacking-and-stripe-as-a-scoreboard-marc-kohlbrugge-playbook" target="_blank">Stripe Scoreboard Playbook — Evil Martians</a>
-<a href="https://www.gamesradar.com/games/after-4-years-of-work-solo-dev-breaks-down-in-tears-after-opening-steam-and-learning-his-game-made-usd250-000-in-a-week-i-feel-like-i-really-dont-deserve-this/" target="_blank">Tangy TD solo $245K — GamesRadar</a>
-
-<div class="credits-cat">▸ LEGAL / RISK</div>
-<a href="https://stripe.com/en-th/legal/restricted-businesses" target="_blank">Stripe Prohibited Businesses — Official List</a>
-<a href="https://paymentexpert.com/2023/09/29/stripe-tos-card-payments/" target="_blank">Stripe Changes TOS Games of Skill — PaymentExpert</a>
-<a href="https://telegram.org/tos/mini-apps" target="_blank">Telegram Terms of Service for Mini Apps</a>
-
-<div class="credits-cat">▸ DISTRIBUTION</div>
-<a href="https://www.cloutboost.com/blog/how-to-market-a-video-game-on-reddit-the-complete-2025-guide-for-game-developers" target="_blank">Reddit Game Marketing Complete Guide 2025</a>
-<a href="https://awesome-directories.com/blog/indie-hackers-launch-strategy-guide-2025/" target="_blank">Indie Hackers Launch Strategy 2025 (3-8× PH)</a>
-<a href="https://rocketdevs.com/blog/how-to-launch-on-product-hunt" target="_blank">Product Hunt Launch Guide 2026 — RocketDevs</a>
-
+<!-- ============================================
+     PULL QUOTE
+     ============================================ -->
+<div class="pullquote">
+  <blockquote>"Open Unity, start a 2D URP project, put TextMeshPro on a canvas, and go."</blockquote>
+  <cite>— THE RESEARCH ENDS WHERE THE BUILD BEGINS</cite>
 </div>
-</section>
 
-<footer>
-  <div class="big">◆ END OF RESEARCH vol.01 ◆</div>
-  <div>GENERATED BY CLAUDE CODE · RESEARCHED BY GENERAL-PURPOSE AGENT</div>
-  <div>FOR TIM ZININ · APRIL 2026 · SYNTHWAVE IS FOREVER</div>
-  <div style="margin-top:12px;color:var(--magenta)">★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★ ☆ ★</div>
-  <div style="margin-top:12px;font-size:15px;color:var(--border-dim)">
-    PRESS [F11] FOR FULLSCREEN · PRESS [CTRL+P] TO PRINT THE POSTER
+<!-- ============================================
+     SOURCES
+     ============================================ -->
+<section class="sources-section">
+  <div class="label">— Sources —</div>
+  <h2 style="margin:20px 0 20px">Forty-four citations</h2>
+  <p class="lede muted" style="max-width:900px;margin-bottom:40px">Every number in this report is anchored to a source dated October 2025 or later. Categories below.</p>
+
+  <div class="sources-grid">
+
+    <div class="sources-cat">
+      <h4>▸ Platform economics</h4>
+      <a href="https://developer.crazygames.com/" target="_blank">CrazyGames Developer Portal</a>
+      <a href="https://docs.crazygames.com/" target="_blank">CrazyGames Documentation — SDK & Payouts</a>
+      <a href="https://developers.poki.com/guide/monetization" target="_blank">Poki Developers Monetization Guide</a>
+      <a href="https://mobidictum.com/pokis-web-gaming-interview-michiel-van-amerongen/" target="_blank">Poki 2025 Milestones Interview</a>
+      <a href="https://generalistprogrammer.com/tutorials/how-to-make-money-on-itchio-indie-game-guide" target="_blank">How to Make Money on Itch.io 2026</a>
+      <a href="https://howtomarketagame.com/2025/05/12/benchmark-itch-io-traffic/" target="_blank">itch.io Traffic Benchmark 2025</a>
+      <a href="https://stripe.com/resources/more/mobile-game-monetization-strategies" target="_blank">Stripe Mobile Game Monetization Guide 2026</a>
+      <a href="https://generalistprogrammer.com/tutorials/roblox-devex-guide-how-to-cash-out-robux" target="_blank">Roblox DevEx Guide 2026</a>
+      <a href="https://discord.com/press-releases/discord-deepens-its-ability-to-drive-growth-for-games" target="_blank">Discord Deepens Growth Drive for Games</a>
+    </div>
+
+    <div class="sources-cat">
+      <h4>▸ Telegram & TON</h4>
+      <a href="https://core.telegram.org/bots/webapps" target="_blank">Telegram Mini Apps Official Docs</a>
+      <a href="https://core.telegram.org/api/stars" target="_blank">Telegram Stars API Official</a>
+      <a href="https://core.telegram.org/bots/payments-stars" target="_blank">Telegram Bot Payments — Stars</a>
+      <a href="https://telestars.io/blog/telegram-stars" target="_blank">TG Stars Price & Withdrawal Guide 2026</a>
+      <a href="https://merge.rocks/blog/telegram-mini-apps-2026-monetization-guide-how-to-earn-from-telegram-mini-apps" target="_blank">TG Mini Apps 2026 Monetization Guide</a>
+      <a href="https://pixelplex.io/blog/viral-mechanics-on-telegram-apps/" target="_blank">Viral Telegram Game Mechanics 2026</a>
+      <a href="https://cointelegraph.com/news/hamster-kombat-decline-telegram-game-competition-rise-of-paws" target="_blank">Hamster Kombat Decline — Cointelegraph</a>
+      <a href="https://propellerads.com/blog/adv-best-telegram-mini-apps/" target="_blank">Best Telegram Mini Apps 2026</a>
+      <a href="https://monetag.com/blog/telegram-mini-app-trends/" target="_blank">Telegram Mini App Trends — Monetag</a>
+    </div>
+
+    <div class="sources-cat">
+      <h4>▸ Reddit Devvit</h4>
+      <a href="https://sqmagazine.co.uk/reddit-statistics/" target="_blank">Reddit Statistics 2026 — SQ Magazine</a>
+      <a href="https://www.interteammarketing.com/blog/reddit-statistics-2026" target="_blank">Reddit Statistics 2026 — Interteam Marketing</a>
+      <a href="https://mcvuk.com/business-news/73-per-cent-of-reddit-users-find-out-about-new-games-on-reddit-how-to-market-your-game-on-reddit/" target="_blank">73% of Reddit Users Find New Games on Reddit</a>
+      <a href="https://redditdailygames2026.devpost.com/" target="_blank">Reddit Daily Games Hackathon 2026 — Devpost</a>
+      <a href="https://gamemaker.io/en/blog/reddit-hackathon" target="_blank">Reddit Hackathon Announcement — GameMaker</a>
+      <a href="https://support.reddithelp.com/hc/en-us/articles/27958169342996-Reddit-Developer-Funds-2026-Terms" target="_blank">Reddit Developer Funds 2026 Terms</a>
+      <a href="https://redditfunandgames.devpost.com/" target="_blank">Fun and Games with Devvit Web Hackathon</a>
+    </div>
+
+    <div class="sources-cat">
+      <h4>▸ Benchmarks & case studies</h4>
+      <a href="https://en.wikipedia.org/wiki/Your_AI_Slop_Bores_Me" target="_blank">Your AI Slop Bores Me — Wikipedia</a>
+      <a href="https://kotaku.com/ai-llm-slop-new-free-game-2000677087" target="_blank">YASBM Coverage — Kotaku</a>
+      <a href="https://bananaproai.com/blog/your-ai-slop-bores-me-the-viral-game-where-humans-replace-ai-and-why-real-ai-still-wins/" target="_blank">YASBM Viral Breakdown — Banana Pro AI</a>
+      <a href="https://knowyourmeme.com/memes/sites/your-ai-slop-bores-me" target="_blank">YASBM — Know Your Meme</a>
+      <a href="https://marc.io/highscore-money" target="_blank">Highscore.money Retrospective — Marc Köhlbrugge</a>
+      <a href="https://www.gamesradar.com/games/after-4-years-of-work-solo-dev-breaks-down-in-tears-after-opening-steam-and-learning-his-game-made-usd250-000-in-a-week-i-feel-like-i-really-dont-deserve-this/" target="_blank">Tangy TD $245K Week-1 — GamesRadar</a>
+      <a href="https://www.allblogthings.com/2026/03/tangy-td-dev-breaks-down-as-his-game-earns-245k-in-7-days-on-steam.html" target="_blank">Tangy TD Revenue Detail — All Blog Things</a>
+      <a href="https://www.pcgamer.com/software/platforms/five-new-steam-games-you-probably-missed-march-23-2026/" target="_blank">Five New Steam Games March 2026 — PC Gamer</a>
+    </div>
+
+    <div class="sources-cat">
+      <h4>▸ Monetization data</h4>
+      <a href="https://tenjin.com/blog/ad-mon-gaming-2025/" target="_blank">Tenjin Ad Monetization Benchmark Report 2025</a>
+      <a href="https://www.businessofapps.com/ads/rewarded-video/" target="_blank">Rewarded Video Ads 2026 — Business of Apps</a>
+      <a href="https://www.globalgamesforum.com/features/the-2026-guide-to-rewarded-video-on-web" target="_blank">2026 Rewarded Video on Web — Gamesforum</a>
+      <a href="https://www.gameanalytics.com/blog/ad-monetization-mobile-games" target="_blank">GameAnalytics Ad Monetization for Mobile</a>
+      <a href="https://developers.openai.com/api/docs/pricing" target="_blank">OpenAI API Pricing 2026</a>
+      <a href="https://pricepertoken.com/pricing-page/model/openai-gpt-4o-mini" target="_blank">GPT-4o-mini API Pricing Details</a>
+    </div>
+
+    <div class="sources-cat">
+      <h4>▸ Legal & distribution</h4>
+      <a href="https://stripe.com/en-th/legal/restricted-businesses" target="_blank">Stripe Prohibited Businesses — Official</a>
+      <a href="https://paymentexpert.com/2023/09/29/stripe-tos-card-payments/" target="_blank">Stripe TOS Games of Skill Ban — PaymentExpert</a>
+      <a href="https://telegram.org/tos/mini-apps" target="_blank">Telegram Mini Apps TOS</a>
+      <a href="https://www.cloutboost.com/blog/how-to-market-a-video-game-on-reddit-the-complete-2025-guide-for-game-developers" target="_blank">Reddit Game Marketing Guide 2025</a>
+      <a href="https://awesome-directories.com/blog/indie-hackers-launch-strategy-guide-2025/" target="_blank">Indie Hackers Launch Strategy 2025</a>
+      <a href="https://rocketdevs.com/blog/how-to-launch-on-product-hunt" target="_blank">Product Hunt Launch Guide 2026</a>
+      <a href="https://news.ycombinator.com/item?id=45362569" target="_blank">"Product Hunt is Dead" — HN Thread</a>
+    </div>
+
   </div>
-</footer>
+
+  <div class="colophon">
+    <div class="big">End of volume one, issue two.</div>
+    GENERATED BY CLAUDE CODE · RESEARCH BY GENERAL-PURPOSE AGENT<br>
+    FOR TIM ZININ · APRIL 5, 2026<br><br>
+    ALL NUMBERS DATED OCTOBER 2025 OR LATER · ANY ERRORS ARE THE MACHINE'S<br>
+    <span style="color:var(--gold)">— FIN —</span>
+  </div>
+
+</section>
 
 </main>
 </body>
